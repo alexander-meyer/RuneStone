@@ -1,107 +1,135 @@
-from char import Mage, Paladin, Rogue, Spider, Bandit
+import data
+from data import Rogue,Mage,Paladin
+
 
 class Adventure:
 
-    def story(self, player):
 
+        # stage for user to select their character
+        print()
         while True:
-            print("You awake in a field. Rubbing your head is of know use - there's no recollection of how you got here.\n")
+            choice = input("Select character class:\n"
+                            "- type 'r' for rogue\n"
+                            "- type 'm' for mage\n"
+                            "- type 'p' for paladin\n"
+                            "- type 'info' for stats\n\n"
+                            ">>> ")
+            if choice == "r" or choice == "m" or choice == "p":
+                break
+            elif choice == "info":
+                print()
+                rogue = Rogue()
+                print(rogue.__str__() + "\n")
 
-            while True:
-                choice = input("What will you do?\n"
-                           "- a. look around\n"
-                           "- b. check bag\n"
-                           "- c. check stats\n\n"
-                           ">>> ")
-                if choice == "b":
+                paladin = Paladin()
+                print(paladin.__str__() + "\n")
+
+                mage = Mage()
+                print(mage.__str__() + "\n")
+                print()
+
+            else:
+                print()
+                print("Not sure what you mean - pick one of the selected options.")
+                print()
+
+        # initialize 'player' object with appropriate choice
+        if choice == "r":
+            player = Rogue()
+        elif choice == "m":
+            player = Mage()
+        elif choice == "p":
+            player = Paladin()
+
+        # take user name and set for player object
+        print()
+        name = input("What is your name? ")
+        print()
+        player.name = name
+        print(player)
+        print()
+
+        print("\nEnter commands to interact with the world. Type 'help' if you're ever stuck.\n\n")
+
+        # nice formatting
+        print(".")
+        print(".")
+        print(".")
+        print("\n")
+
+        # building the world
+        world = data.World
+        curRoom = world.rooms['meadow']
+
+
+        # the story begins
+        while True:
+
+            print("You are in {}.".format(curRoom['name']))
+            print(curRoom['text'])
+            print()
+
+            # options from user input
+            command = input("What do you do? \n ".strip()).lower()
+            print()
+
+            # movement
+            if "go" in command:
+                commandSplit = command.split()
+                direction = commandSplit[1]
+                if direction in world.directions:
+                    if direction in curRoom:
+                        nextRoom = curRoom[direction]
+                        curRoom = world.rooms[nextRoom]
+                    else:
+                        print("You cant go there.")
+
+            # help
+            elif command in "help":
+                print("Try entering basic instructions: look, go ____, check, etc.")
+
+            # quit
+            elif command in ("q","quit","end","stop"):
+                print("\nFarewell, hero.\n")
+                break
+
+            # look around
+            elif command in ("look","look around", "nearby","check surroundings"):
+                print()
+                for direction in curRoom['exits']:
+                    print("To your {} lies {}.".format(direction, world.rooms[curRoom[direction]]['name']))
+                print('\n')
+
+            # 'check' what?
+            elif command in ("check"):
+                response = input("Check what? (bag, surroundings, status) ")
+                if response in ("bag"):
+                    if world.inventory.__sizeof__() == 0:
+                        print("Nothing in your bag!")
+                    else:
+                        print(world.inventory)
+                if response in ("surroundings","area", "nearby"):
                     print()
-                    print("No items in bag\n")
-                if choice == "c":
-                    print()
+                    for direction in curRoom['exits']:
+                        print("To your {} lies {}.".format(direction, curRoom[direction]))
+                    print('\n')
+                if response in ("status","health","state"):
                     print(player)
-                    print()
-                if choice == "a":
 
-                    print()
+            # bad command
+            else:
+                print("Unsure what you mean.")
+
+            # nice formatting
+            print(".")
+            print(".")
+            print(".")
+            print("\n")
 
 
-                    while True:
-                        choice = input("You stand up, stretching and surveying the surrounding landscape. In front of you lies a hill, "
-                                       "while off to your right a winding stream snakes out of the forest behind you.\n"
-                                       "- a. climb the hill\n"
-                                       "- b. go to stream\n"
-                                       "- c. inspect the forest\n\n"
-                                       ">>> ")
-
-                        if choice == "a":
-                            print()
-                            print("Despite its size, the hill grants you unobstructed view for miles around. Off in the distance, you spy what appears to be a small town.")
-                            print()
-                        if choice == "b":
-                            print()
-                            print("Upon nearing the stream, you hear snatches of conversation. Drawing near, "
-                                  "you see two figures hunched over the riverbank, each holding a long wooden pole.")
-                            print()
-                        if choice == "c":
-                            print()
-                            print("The forest looms, tall and foreboding. There is no clear path, and it seems ill-advised to press on.")
-                            print()
-
-            break
 
 def main():
 
-    print()
-    while True:
-        choice = input("Select character class:\n"
-                        "- type 'r' for rogue\n"
-                        "- type 'm' for mage\n"
-                        "- type 'p' for paladin\n"
-                        "- type 'info' for stats\n\n"
-                        ">>> ")
-        if choice == "r" or choice == "m" or choice == "p":
-            break
-        elif choice == "info":
-            print()
-            rogue = Rogue()
-            print("Starting rogue class \n\n" + rogue.__str__() + "\n")
-
-            print()
-            paladin = Paladin()
-            print("Starting paladin class \n\n" + paladin.__str__() + "\n")
-
-            print()
-            mage = Mage()
-            print("Starting mage class \n\n" + mage.__str__() + "\n")
-            print()
-
-        else:
-            print()
-            print("Not sure what you mean - pick one of the selected options.")
-            print()
-
-    if choice == "r":
-        player = Rogue()
-    elif choice == "m":
-        player = Mage()
-    elif choice == "p":
-        player = Paladin()
-
-
-    print()
-
-    name = input("What is your name? ")
-    print()
-    player.name = name
-    print(player)
-    print()
-
-    print(".")
-    print(".")
-    print(".")
-
-    print("\n")
-
     adventure = Adventure()
 
-    adventure.story(player)
+main()

@@ -1,5 +1,5 @@
 import math
-from char import Rogue, Mage, Paladin, Spider, Bandit
+from data import Rogue, Mage, Paladin, Spider, Bandit
 
 
 class Battle:
@@ -18,7 +18,6 @@ class Battle:
 
 
     # Make this method static because we don't need to use self
-    # a test comment number 2
     @staticmethod
     def getAttackResult(charA, charB):
         charADamage = charA.attack()

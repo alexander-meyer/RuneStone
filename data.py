@@ -1,5 +1,32 @@
 import random
-import math
+
+
+class World:
+
+    # room setup
+    rooms = {
+        'meadow': {'name': 'a meadow', 'exits': {'north','west','east'}, 'north': 'hill', 'west': 'forest',
+                  'east': 'river', 'text': 'A gentle breeze blows through, causing the grass to dance and sway.', 'items': 'none'},
+        'river': {'name': 'a river', 'exits': {'north','south'}, 'south': 'riverbank',
+                  'west': 'meadow', 'text': 'It curves around and out of sight, the water running deep and swift.', 'items': 'none'},
+        'riverbank': {'name': 'a protruding riverbank', 'exits': {'north'}, 'event': 'fishermen', 'north': 'river',
+                      'text': 'The stream here is gentler, and you can overhear what appears to be a conversation.'},
+        'forest': {'name': 'a forest', 'exits': {'east'}, 'event': 'illuminate', 'east': 'meadow',
+                   'text': "Looming pines make it too dark to see - perhaps if there was a way to illuminate the path?", 'items': 'none'},
+        'cabin': {'name': 'an old cabin', 'exits': {'north'}, 'north': 'forest', 'text': 'Inside you see old bottles, rotting furniture and various '
+                                                                                               'papers strewn across the floor.'},
+        'hill': {'name': 'a hill', 'exits': {'north'}, 'south': 'meadow', 'north': 'town', 'text': 'The hilltop rewards you with an unobstructed view of your surroundings.'},
+        'town': {'name': 'a town', 'exits': {'north','south','east'}, 'south': 'hill', 'north': 'mountain', 'east': 'plains', 'text': ''}
+        }
+
+    directions = {'north', 'south', 'west', 'east'}
+
+    currentRoom = rooms['meadow']
+
+    inventory = []
+
+
+
 
 class Character:
 
@@ -125,7 +152,8 @@ class Spider(Character):
         Character.__init__(self, name= "Spider", build = "Monster", health= 12, attk = 4, defense = 3, evade = 1)
 
 class Bandit(Character):
-    
+
     def __init__(self):
         Character.__init__(self, name= "Bandit", build = "Monster", health =6, attk = 4, defense = 2, evade = 2)
+
 
