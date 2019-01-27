@@ -65,7 +65,7 @@ class Adventure:
         # the story begins
         while True:
 
-            print("You are in {}.".format(curRoom['name']))
+            print("You {}.".format(curRoom['description']))
             print(curRoom['text'])
             print()
 
@@ -74,19 +74,28 @@ class Adventure:
             print()
 
             # movement
-            if "go" in command:
+
+            # if they enter east/west/etc. directly
+            if command in world.directions:
+                world.prevRoom = curRoom
+                curRoom = world.rooms[curRoom[command]]
+
+            elif "go" in command:
                 commandSplit = command.split()
                 direction = commandSplit[1]
                 if direction in world.directions:
                     if direction in curRoom:
-                        nextRoom = curRoom[direction]
-                        curRoom = world.rooms[nextRoom]
+                        world.prevRoom = curRoom
+                        curRoom = world.rooms[curRoom[direction]]
                     else:
                         print("You cant go there.")
+                elif "back" in command:
+                    tmp = world.prevRoom
+
 
             # help
             elif command in "help":
-                print("Try entering basic instructions: look, go ____, check, etc.")
+                print("Try entering basic instructions: look, go ____, check, etc.\n")
 
             # quit
             elif command in ("q","quit","end","stop"):
@@ -97,11 +106,11 @@ class Adventure:
             elif command in ("look","look around", "nearby","check surroundings"):
                 print()
                 for direction in curRoom['exits']:
-                    print("To your {} lies {}.".format(direction, world.rooms[curRoom[direction]]['name']))
+                    print("To your {} lies a {}.".format(direction, world.rooms[curRoom[direction]]['name']))
                 print('\n')
 
             # 'check' what?
-            elif command in ("check"):
+            elif "check" in command:
                 response = input("Check what? (bag, surroundings, status) ")
                 if response in ("bag"):
                     if world.inventory.__sizeof__() == 0:

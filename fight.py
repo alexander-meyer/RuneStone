@@ -18,6 +18,7 @@ class Battle:
 
 
     # Make this method static because we don't need to use self
+
     @staticmethod
     def getAttackResult(charA, charB):
         charADamage = charA.attack()
@@ -44,20 +45,21 @@ class Battle:
 
 def main():
 
-    print()
+    print
     print("Fleeing down the road, the hooded figure finds himself set upon by a monstrous arachnid.")
     marty = Rogue()
     marty.name = "marty"
     spidah = Spider()
-    print()
+    print
     print(marty)
-    print()
+    print
     print(spidah)
-    print()
+    print
 
     battle = Battle()
 
     battle.startFight(marty,spidah)
+    print
 
 
 

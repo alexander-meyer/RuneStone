@@ -5,23 +5,27 @@ class World:
 
     # room setup
     rooms = {
-        'meadow': {'name': 'a meadow', 'exits': {'north','west','east'}, 'north': 'hill', 'west': 'forest',
-                  'east': 'river', 'text': 'A gentle breeze blows through, causing the grass to dance and sway.', 'items': 'none'},
-        'river': {'name': 'a river', 'exits': {'north','south'}, 'south': 'riverbank',
-                  'west': 'meadow', 'text': 'It curves around and out of sight, the water running deep and swift.', 'items': 'none'},
-        'riverbank': {'name': 'a protruding riverbank', 'exits': {'north'}, 'event': 'fishermen', 'north': 'river',
+        'meadow': {'name': 'meadow','description': 'find yourself in a meadow', 'exits': {'north','west','east'}, 'north': 'hill', 'west': 'forest',
+                  'east': 'river', 'text': 'A gentle breeze blows through, causing the grass to dance and sway.'},
+        'river': {'name': 'river','description': 'come to the edge a river', 'exits': {'north','south'}, 'south': 'riverbank',
+                  'west': 'meadow', 'text': 'The water looks cool and pleasant.', 'items': 'none'},
+        'riverbank': {'name': 'riverbank','description': 'make your way to the riverbank, and hear what appears to be someone"'"s voice",
+                      'exits': {'north'}, 'event': 'fishermen', 'north': 'river',
                       'text': 'The stream here is gentler, and you can overhear what appears to be a conversation.'},
-        'forest': {'name': 'a forest', 'exits': {'east'}, 'event': 'illuminate', 'east': 'meadow',
+        'forest': {'name': 'forest','description': 'come to a foreboding forest', 'exits': {'east'}, 'event': 'illuminate', 'east': 'meadow',
                    'text': "Looming pines make it too dark to see - perhaps if there was a way to illuminate the path?", 'items': 'none'},
-        'cabin': {'name': 'an old cabin', 'exits': {'north'}, 'north': 'forest', 'text': 'Inside you see old bottles, rotting furniture and various '
-                                                                                               'papers strewn across the floor.'},
-        'hill': {'name': 'a hill', 'exits': {'north'}, 'south': 'meadow', 'north': 'town', 'text': 'The hilltop rewards you with an unobstructed view of your surroundings.'},
-        'town': {'name': 'a town', 'exits': {'north','south','east'}, 'south': 'hill', 'north': 'mountain', 'east': 'plains', 'text': ''}
+        'cabin': {'name': 'cabin','description': 'stumble upon an old cabin', 'exits': {'north'}, 'north': 'forest',
+                  'text': 'Inside you see old bottles, rotting furniture and various papers strewn across the floor.'},
+        'hill': {'name': 'hill','description': 'reach the top of a small hill', 'exits': {'north'}, 'south': 'meadow', 'north': 'town',
+                 'text': 'The hilltop rewards you with an unobstructed view of your surroundings.'},
+        'town': {'name': 'town','description': 'arrive at a bustling town', 'exits': {'north','south','east'}, 'south': 'hill',
+                 'north': 'mountain', 'east': 'plains', 'text': 'Vendors line the street, '}
         }
 
     directions = {'north', 'south', 'west', 'east'}
 
     currentRoom = rooms['meadow']
+    prevRoom = []
 
     inventory = []
 
@@ -30,10 +34,9 @@ class World:
 
 class Character:
 
-    def __init__(self, name = "unknown", build = "", level = 1, health = 0, attk = 0, defense = 0, evade = 0):
+    def __init__(self, name = "", build = "", health = 0, attk = 0, defense = 0, evade = 0):
         self.name = name
         self.build = build
-        self.level = level
         self.health = health
         self.attk = attk
         self.defense = defense
@@ -83,52 +86,48 @@ class Character:
     def evade(self, evade):
         self.__evade = evade
 
-    @property
-    def level(self):
-        return self.__level
 
-    @level.setter
-    def level(self, level):
-        self.__level = level
+    #
+    #
+    #
+    ## attack, block and evade methods
+    #
 
-
-    # attack, block and evade methods
-
+    ## Randomly calculate the attack amount
     def attack(self):
-        # Randomly calculate the attack amount
-        # random() returns a value from 0.0 to 1.0
-        attkAmt = self.attk * (random.random() + .5)
 
+        attkAmt = self.attk * (random.random() + .5)
         return attkAmt
 
+    # Randomly calculate how much of the attack was blocked
     def block(self):
-        # Randomly calculate how much of the attack was blocked
         blockAmt = self.defense * (random.random() + .5)
-
         return blockAmt
 
+    # Use 'evasion' stat to determine percentage chance of dodging hit
     def dodge(self):
-        # scale player evasion and turn into percentage chance of evasion
+
+        # scale 'evasion' stat
         dex = self.evade*5
+        # determine percentage chance of evasion
         difficulty = random.randint(0,100)
-        if dex >= difficulty:
-            return True
-        else:
-            return False
+        return dex >= difficulty
 
 
-
+    # toString method
     def __str__(self):
         return "Name: {}\n" \
                "Class: {}\n" \
-               "Level: {}\n" \
                "Health: {}\n" \
                "Attack: {}\n" \
                "Defense: {}\n" \
-               "Evasion: {}".format(self.name,self.build,self.level, self.health,self.attk,self.defense,self.evade)
+               "Evasion: {}".format(self.name,self.build,self.health,self.attk,self.defense,self.evade)
 
 
+#
+#
 ## player classes
+
 class Rogue(Character):
 
     def __init__(self):
@@ -149,11 +148,17 @@ class Paladin(Character):
 class Spider(Character):
 
     def __init__(self):
-        Character.__init__(self, name= "Spider", build = "Monster", health= 12, attk = 4, defense = 3, evade = 1)
+        Character.__init__(self, name= "Spider", build = "Enemy", health = 12, attk = 4, defense = 3, evade = 1)
 
 class Bandit(Character):
 
     def __init__(self):
-        Character.__init__(self, name= "Bandit", build = "Monster", health =6, attk = 4, defense = 2, evade = 2)
+        Character.__init__(self, name= "Bandit", build = "Enemy", health = 6, attk = 4, defense = 2, evade = 2)
+
+class Sorcerer(Character):
+
+    def __init__(self):
+        Character.__init__(self, name="Sorcerer", build= "Enemy", health = 6, attk = 4, defense = 2, evade = 2)
+
 
 
