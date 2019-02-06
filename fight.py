@@ -1,5 +1,5 @@
 import math
-from data import Rogue, Mage, Paladin, Spider, Bandit
+
 
 
 class Battle:
