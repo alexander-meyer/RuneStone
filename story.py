@@ -1,8 +1,5 @@
 import random, math
 
-
-
-
 #      #
 # DATA #
 #      #
@@ -21,7 +18,7 @@ rooms = {
                'items': 'none'},
     'cabin': {'name': 'cabin', 'description': 'stumble upon an old cabin', 'exits': {'north'}, 'north': 'forest',
               'text': 'Inside you see old bottles, rotting furniture and various papers strewn across the floor.'},
-    'hill': {'name': 'hill', 'description': 'reach the top of a small hill', 'exits': {'north'}, 'south': 'meadow',
+    'hill': {'name': 'hill', 'description': 'reach the top of a small hill', 'exits': {'north', 'south'}, 'south': 'meadow',
              'north': 'town',
              'text': 'The hilltop rewards you with an unobstructed view of your surroundings.'},
     'town': {'name': 'town', 'description': 'arrive at a bustling town', 'exits': {'north', 'south', 'east'},
@@ -37,7 +34,7 @@ events = {
 
 
 # Acceptable inputs for 'go ____' command
-directions = {'north', 'south', 'west', 'east'}
+directions = ('north', 'south', 'west', 'east')
 
 # Keep track of current room (game begins in 'meadow')
 currentRoom = rooms['meadow']
@@ -139,11 +136,10 @@ class Character:
 
     # Use 'evasion' stat to determine percentage chance of dodging hit
     def dodge(self):
-        # scale 'evasion' stat
+        # scale 'evasion' stat (arbitrarily)
         dex = self.evade*5
         # determine percentage chance of evasion
-        difficulty = random.randint(0,100)
-        return dex >= difficulty
+        return dex >= random.randint(0,100)
 
 
 
@@ -204,28 +200,22 @@ def updateRoom(direction):
 def goBack():
     global prevRoom
     global currentRoom
-    tmp = prevRoom
-    prevRoom = currentRoom
-    currentRoom = tmp
+    currentRoom, prevRoom = prevRoom, currentRoom
 
 # Given the various possibilities for 'go' (go, go back, go to ___), a separate method is defined here
 def goInCommand(command):
 
     # Split input into array
-    command = command.split()
+    commands = command.split()
 
     # User just types go -> prompt further
-    if len(command) == 1:
-        newInput = input("\nGo where?\n")
-        getCommand(newInput)
+    if len(commands) == 1:
+        getCommand(input("\nGo where?\n"))
     # Else split array and analyze
     else:
         # Take second word in command
-        goWhere = command[1]
-        if goWhere in currentRoom['exits']:
-            updateRoom(goWhere)
-        elif goWhere == "back":
-            goBack()
+        if commands[1] in currentRoom['exits']:
+            updateRoom(commands[1])
         else:
             print("\nYou can't go there.\n")
 
@@ -245,6 +235,15 @@ def getCommand(command):
 
     elif "back" in command:
         goBack()
+
+    elif "walk" in command:
+        commands = command.split()
+        if len(commands) == 1:
+            getCommand(input("\nWalk where?\n"))
+        elif commands[1] in currentRoom['exits']:
+            updateRoom(commands[1])
+        else:
+            print("\nYou can't go there.\n")
 
 
     # HELP
@@ -294,18 +293,23 @@ def getCommand(command):
     # EVENTS
 
     # Sleep/rest command for starting room. Meadow acts as HP restoration point
-    elif command in ("sleep", "lie down", "lay down", "rest", "to sleep"):
+    elif command in ("sleep", "lie down", "lay down", "rest", "to sleep", "take a nap", "nap"):
         if currentRoom == rooms['meadow']:
             print("\n{}\n\n".format(events['rest']['text']))
 
-    elif command in ("swim","dive in","swimming","for a swim","in river"):
+    # Swimming event, finding amethyst ring
+    elif command in ("swim","dive in","swimming","for a swim","in river", "jump in"):
         if currentRoom == rooms['river']:
             print("\n{}\n\n".format(events['swim']['text']))
         global inventory
         if not 'Amethyst Ring' in inventory:
-            print("Something shiny catches your eye on the riverbed\n\n * Amethyst Ring added to inventory *\n")
+            print("Something shiny catches your eye on the riverbed.\n\n * Amethyst Ring added to inventory *\n")
             inventory.append('Amethyst Ring')
 
+    # MISC
+
+    elif "smoke" in command:
+        print("\nAlas. You're all out.\n")
 
     # BAD COMMAND
 
