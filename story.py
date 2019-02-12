@@ -409,11 +409,9 @@ class Story:
             break
 
         elif choice == "info":
-            print("\n *  *  *  Base Character Profiles  *  *  *\n")
-            rogue = Rogue()
-            warrior = Warrior()
-            mage = Mage()
-            print(warrior.__str__() + "\n\n" + rogue.__str__() + "\n\n" + mage.__str__() + "\n\n" + " *  *  *" + "\n")
+            print("\n\nWarrior: strong and tough, you have trained yourself well to survive hardship. Well-balanced in attack and defense.\n"
+                      "Mage:    harnessing ancient power, your spells overwhelm those in your path. Strong attack, though weak defenses.\n"
+                      "Rogue:   smooth as a whisper, your stealth lets you deal damage before the enemy knows what's happening. Good strength and evasion.\n")
 
         else:
             print("\nNot sure what you mean - pick one of the selected options.\n")
