@@ -9,21 +9,22 @@ import random, math
 rooms = {
     'meadow': {'name': 'meadow', 'description': 'find yourself in a meadow', 'exits': {'north', 'west', 'east'},
                'north': 'hill', 'west': 'forest',
-               'east': 'river', 'text': 'A gentle breeze blows through, causing the grass to dance and sway.' },
+               'east': 'river', 'text': "A gentle breeze blows through, causing the grass to dance and sway." },
     'river': {'name': 'river', 'description': 'come to the edge a river', 'exits': {'west'},
-              'west': 'meadow', 'text': 'The water looks cool and pleasant.', 'item': 'Amethyst ring', 'event': 'swim'},
+              'west': 'meadow', 'text': "The water looks cool and pleasant.", 'item': 'Amethyst ring', 'event': 'swim'},
     'forest': {'name': 'forest', 'description': 'come to a foreboding forest', 'exits': {'east'}, 'event': 'illuminate',
                'east': 'meadow',
                'text': "Looming pines make it too dark to see - perhaps if there was a way to illuminate the path?",
                'items': 'none'},
     'cabin': {'name': 'cabin', 'description': 'stumble upon an old cabin', 'exits': {'north'}, 'north': 'forest',
-              'text': 'Inside you see old bottles, rotting furniture and various papers strewn across the floor.'},
+              'text': "Inside you see old bottles, rotting furniture and various papers strewn across the floor."},
     'hill': {'name': 'hill', 'description': 'reach the top of a small hill', 'exits': {'north', 'south'}, 'south': 'meadow',
              'north': 'town',
-             'text': 'The hilltop rewards you with an unobstructed view of your surroundings.'},
+             'text': "The land stretches out for leagues ahead of you. A mountain looms in the horizon, dark and foreboding."},
     'town': {'name': 'town', 'description': 'arrive at a bustling town', 'exits': {'north', 'south', 'east'},
              'south': 'hill', 'north': 'mountain', 'east': 'plains',
-             'text': 'A bell rings in the distance, barely discernible amidst the market bustle.'}
+             'text': 'A bell rings in the distance, barely discernible amidst the market bustle.'},
+    'plains': {'name': 'plains'}
 }
 
 events = {
@@ -51,7 +52,7 @@ inventory = []
 # Print inventory
 def displayInventory():
     print()
-    if len(inventory) == 0:
+    if not inventory:
         print("*you rummage around in your bag*\nNothing there.")
     else:
         print(inventory)
@@ -190,12 +191,16 @@ class Sorcerer(Character):
 #       #
 
 
-def updateRoom(direction):
+def updateRoom(input):
 
     global prevRoom
     global currentRoom
     prevRoom = currentRoom
-    currentRoom = rooms[currentRoom[direction]]
+
+    if input in directions:
+        currentRoom = rooms[currentRoom[input]]
+    else:
+        currentRoom = rooms[input]
 
 def goBack():
     global prevRoom
@@ -229,6 +234,11 @@ def getCommand(command):
     # If user enters east/west/etc. directly
     if command in currentRoom['exits']:
         updateRoom(command)
+
+    # If they enter room name directly
+    if command in rooms:
+        updateRoom(command)
+
     # Go ____
     elif "go" in command:
         goInCommand(command)
@@ -370,16 +380,23 @@ class Battle:
 #       #
 
 class Story:
+    print("\n   _____________________________________________________________________________________")
+    print("  | rrrrrr    u     u   n     n   eeeeee    ssss   ttttttt   ooooo    n     n   eeeeee  |  ")
+    print("  | r     r   u     u   n n   n   e        s          t     o     o   n n   n   e       |  ")
+    print("  | rrrrrr    u     u   n  n  n   eeeeee    sss       t     o     o   n  n  n   eeeeee  |  ")
+    print("  | r    r    u     u   n   n n   e            s      t     o     o   n   n n   e       |  ")
+    print("  | r     r    uuuuu    n     n   eeeeee   ssss       t      ooooo    n     n   eeeeee  |  ")
+    print("  |_____________________________________________________________________________________|  ")
+
+
+    print("\n\n *\n *\n *\n")
 
     # Character selection
     while True:
         print()
-        choice = input("Select character class:\n"
-                       "- type 'r' for rogue\n"
-                       "- type 'm' for mage\n"
-                       "- type 'p' for paladin\n"
-                       "- type 'info' for stats\n\n"
-                       ">>> ")
+        choice = input("What type of character are you?\n"
+                       "(type 'p' for paladin, 'r' for rogue, 'm' for mage or 'info' for stats)\n\n"
+                       "> ")
 
         # Initialize 'player' object with appropriate choice
         if choice == "r":
@@ -405,13 +422,12 @@ class Story:
 
     # Take user name and set for player object
     print()
-    player.name = input("What is your name?\n")
+    player.name = input("What is your name?\n\n> ")
     global status
     status = player
     print()
-    print(player)
 
-    print("\n\n  * Enter commands to interact with the world. Type 'help' if you're ever stuck. * \n\n\n*\n*\n*\n\n")
+    print("\nEnter commands to interact with the world. Type 'help' if you're ever stuck.\n\n\n*\n*\n*\n\n")
 
     # Formatting
 
@@ -424,7 +440,7 @@ class Story:
 
         # Get user commands
         print()
-        command = input("What do you do?\n")
+        command = input("What do you do?\n\n> ")
         command = command.strip().lower()
         getCommand(command)
         print()
