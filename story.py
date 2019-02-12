@@ -163,9 +163,9 @@ class Mage(Character):
     def __init__(self):
         Character.__init__(self,name = "", build = "Mage", health = 12, attk = 9, defense = 2, evade = 2)
 
-class Paladin(Character):
+class Warrior(Character):
     def __init__(self):
-        Character.__init__(self,name = "", build = "Paladin", health = 19, attk = 6, defense = 6, evade = 1)
+        Character.__init__(self,name = "", build = "Warrior", health = 19, attk = 6, defense = 6, evade = 1)
 
 
 # Enemy classes
@@ -259,7 +259,7 @@ def getCommand(command):
     # HELP
 
     elif "help" in command:
-        print("Try entering basic instructions: look, go, check, etc.\n")
+        print("\nTry entering basic instructions: look, go, check, etc.\n")
 
 
     # QUIT
@@ -275,7 +275,7 @@ def getCommand(command):
         for direction in currentRoom['exits']:
             nextRoom = currentRoom[direction]
             print("To your {} lies a {}.".format(direction, nextRoom))
-        print('\n')
+        print()
 
 
     # STATUS
@@ -394,9 +394,8 @@ class Story:
     # Character selection
     while True:
         print()
-        choice = input("What type of character are you?\n"
-                       "(type 'p' for paladin, 'r' for rogue, 'm' for mage or 'info' for stats)\n\n"
-                       "> ")
+        choice = input("Who are you? (type 'info' for stats)\n\n"
+                       "'w' ––> Warrior\n'r' ––> Rogue\n'm' ––> Mage\n\n> ")
 
         # Initialize 'player' object with appropriate choice
         if choice == "r":
@@ -405,16 +404,16 @@ class Story:
         elif choice == "m":
             player = Mage()
             break
-        elif choice == "p":
-            player = Paladin()
+        elif choice == "w":
+            player = Warrior()
             break
 
         elif choice == "info":
             print("\n *  *  *  Base Character Profiles  *  *  *\n")
             rogue = Rogue()
-            paladin = Paladin()
+            warrior = Warrior()
             mage = Mage()
-            print(rogue.__str__() + "\n\n" + paladin.__str__() + "\n\n" + mage.__str__() + "\n\n" + " *  *  *" + "\n")
+            print(warrior.__str__() + "\n\n" + rogue.__str__() + "\n\n" + mage.__str__() + "\n\n" + " *  *  *" + "\n")
 
         else:
             print("\nNot sure what you mean - pick one of the selected options.\n")
@@ -422,7 +421,7 @@ class Story:
 
     # Take user name and set for player object
     print()
-    player.name = input("What is your name?\n\n> ")
+    player.name = input("Your name?\n\n> ")
     global status
     status = player
     print()
