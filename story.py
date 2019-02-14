@@ -1,4 +1,5 @@
 import random, math
+from fight import Battle
 
 #      #
 # DATA #
