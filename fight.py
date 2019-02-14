@@ -1,26 +1,27 @@
 import math
+from story import Spider, Rogue
 
 
 
 class Battle:
 
-    def startFight(self, char1, char2):
+    def startFight(self, player, char2):
 
 
         while True:
-            if self.getAttackResult(char1, char2) == "Game Over":
-                print("Game Over")
+            if self.getAttackResult(player, char2) == "Over":
+                print("Victorious!")
                 break
 
-            if self.getAttackResult(char2, char1) == "Game Over":
+            if self.getAttackResult(char2, player) == "Over":
                 print("Game Over")
                 break
 
 
     # Make this method static because we don't need to use self
-
     @staticmethod
     def getAttackResult(charA, charB):
+
         charADamage = charA.attack()
 
         charBBlockAmt = charB.block()
@@ -39,7 +40,7 @@ class Battle:
             print("{} has Died and {} is Victorious".format(charB.name,
                                                             charA.name))
 
-            return "Game Over"
+            return "Over"
         else:
             return "Fight Again"
 

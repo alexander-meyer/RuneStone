@@ -12,7 +12,7 @@ rooms = {
                'east': 'river', 'text': "A gentle breeze blows through, causing the grass to dance and sway." },
     'river': {'name': 'river', 'description': 'come to the edge a river', 'exits': {'west'},
               'west': 'meadow', 'text': "The water looks cool and pleasant.", 'item': 'Amethyst ring', 'event': 'swim'},
-    'forest': {'name': 'forest', 'description': 'come to a foreboding forest', 'exits': {'east'}, 'event': 'illuminate',
+    'forest': {'name': 'forest', 'description': 'arrive at the entrance to a forest', 'exits': {'east'}, 'event': 'illuminate',
                'east': 'meadow',
                'text': "Looming pines make it too dark to see - perhaps if there was a way to illuminate the path?",
                'items': 'none'},
@@ -205,7 +205,11 @@ def updateRoom(input):
 def goBack():
     global prevRoom
     global currentRoom
-    currentRoom, prevRoom = prevRoom, currentRoom
+
+    if not prevRoom:
+        print("\nNowhere to go back to.\n")
+    else:
+        currentRoom, prevRoom = prevRoom, currentRoom
 
 # Given the various possibilities for 'go' (go, go back, go to ___), a separate method is defined here
 def goInCommand(command):
@@ -236,15 +240,17 @@ def getCommand(command):
         updateRoom(command)
 
     # If they enter room name directly
-    if command in rooms:
+    elif command in rooms:
         updateRoom(command)
+
+    # back/go back
+    elif "back" in command:
+        goBack()
 
     # Go ____
     elif "go" in command:
         goInCommand(command)
 
-    elif "back" in command:
-        goBack()
 
     elif "walk" in command:
         commands = command.split()
@@ -424,7 +430,7 @@ class Story:
     status = player
     print()
 
-    print("\nEnter commands to interact with the world. Type 'help' if you're ever stuck.\n\n\n*\n*\n*\n\n")
+    print("\nEnter commands to interact with the world (type 'help' for some hints)\n\n\n*\n*\n*\n\n")
 
     # Formatting
 
@@ -445,8 +451,7 @@ class Story:
 
 
 def main():
-
     Story()
 
-
-main()
+if __name__ == '__main__':
+    main()
