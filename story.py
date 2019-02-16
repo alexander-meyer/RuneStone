@@ -348,10 +348,10 @@ def getCommand(Character):
     # MISC
 
     elif "smoke" in command:
-        print("\nAlas. You're all out.\n")
+        print("\n\nAlas. You're all out.\n")
 
     elif "dance" in command:
-        print("\nLeaping about, you let your rhythm burst out in frenzied dance. Nothing happens, but you feel great.")
+        print("\n\nLeaping about, you let your rhythm burst out in frenzied dance. Nothing happens, but you feel great.")
 
 
     # BAD COMMAND
@@ -475,6 +475,7 @@ class Story:
         if 'event' in currentRoom:
             if currentRoom['event'] == 'fight' and currentRoom['enemies'] > 0:
                 currentRoom['enemies'] -= 1
+                print("Suddenly a hooded figure jumps out from the bushes! Brandishing a knife, they charge towards you.\n\n")
                 battle = Battle()
                 bandit = Bandit()
                 battle.startFight(player,bandit)
