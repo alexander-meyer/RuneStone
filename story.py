@@ -41,7 +41,6 @@ directions = ('north', 'south', 'west', 'east')
 currentRoom = rooms['meadow']
 
 # GLOBAL VAR
-
 # For the 'go back' command, keep track of previous room
 prevRoom = None
 # Player inventory, accessible with 'check bag' command
@@ -51,7 +50,7 @@ inventory = []
 def displayInventory():
     print()
     if not inventory:
-        print("*you rummage around in your bag*\nNothing there.")
+        print("*You rummage around in your bag*\nNothing there.")
     else:
         print(inventory)
     print()
@@ -196,6 +195,21 @@ class Sorcerer(Character):
 
 
 
+class Item:
+
+    def __init__(self, name = ""):
+        self.name = name
+
+    @property
+    def name(self):
+        return self.__name
+    @name.setter
+    def name(self,name):
+        self.__name = name
+
+
+
+
 #       #
 # INPUT #
 #       #
@@ -221,7 +235,7 @@ def goBack():
     else:
         currentRoom, prevRoom = prevRoom, currentRoom
 
-# Given the various possibilities for 'go' (go, go back, go to ___), a separate method is defined here
+# Given the various possibilities for 'go' (go, go back, go to the ___), method handles user input
 def goInCommand(command):
 
     # Split input into array
@@ -232,11 +246,21 @@ def goInCommand(command):
         getCommand(input("\nGo where?\n"))
     # Else split array and analyze
     else:
-        # Take second word in command
-        if commands[1] in currentRoom['exits']:
-            updateRoom(commands[1])
+        check = False
+        for word in commands:
+            if word in currentRoom['exits']:
+                updateRoom(word)
+                # check = True
+                return
+            for exit in currentRoom['exits']:
+                if word == currentRoom[exit]:
+                    updateRoom(word)
+                    # check = True
+                    return
         else:
-            print("\nYou can't go there.\n")
+            print("Can't go there.")
+
+
 
 def badCommand():
 
@@ -415,7 +439,8 @@ class Battle:
 # STORY #
 #       #
 
-class Story:
+def story(currentRoom, prevRoom):
+
     print("\n   _____________________________________________________________________________________")
     print("  | rrrrrr    u     u   n     n   eeeeee    ssss   ttttttt   ooooo    n     n   eeeeee  |           ")
     print("  | r     r   u     u   n n   n   e        s          t     o     o   n n   n   e       |           ")
@@ -431,7 +456,7 @@ class Story:
     while True:
         print()
         choice = input("Who are you? (type 'info' for stats)\n\n"
-                       "'w' ––> Warrior\n'r' ––> Rogue\n'm' ––> Mage\n\n> ")
+                       "'w' ––> Warrior\n'r' ––> Rogue\n'm' ––> Mage\n\n> ").strip().lower()
 
         # Initialize 'player' object with appropriate choice
         if choice == "r":
@@ -462,7 +487,6 @@ class Story:
 
     print("\nEnter commands to interact with the world (type 'help' for some hints)\n\n\n*\n*\n*\n\n")
 
-    # Formatting
 
 
     # The story begins..
@@ -486,7 +510,8 @@ class Story:
 
 
 def main():
-    Story()
+
+    story()
 
 if __name__ == '__main__':
     main()
