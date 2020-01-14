@@ -8,6 +8,7 @@ body {
 #user-input {
     border: none;
     font-family: monospace;
+    font-size: 12pt;
     background: transparent;
     max-width: 100ch;
 }
