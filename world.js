@@ -1,5 +1,5 @@
 var rooms = {
-    start: {
+    meadow: {
         description:
             "<p>You find yourself in a meadow. A gentle breeze blows through, causing the grass to dance and sway.</p>",
         directions: {

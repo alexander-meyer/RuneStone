@@ -1,39 +1,65 @@
-var currentRoom = "start";
-
+var currentRoom = "meadow";
 var gameText = $('#game-text');
 var userInput = $('#user-input');
+const directions = ['north', 'south', 'west', 'east'];
+
+function describeSurroundings() {
+    gameText.append(rooms[currentRoom].description);
+
+    Object.keys(rooms[currentRoom].directions).forEach(function (dir) {
+        gameText.append(`To your ${dir} lies a ${rooms[currentRoom].directions[dir]}. <br/>`);
+    });
+
+    gameText.append('<br/>');
+
+}
 
 function changeRoom(dir) {
     if ((rooms[currentRoom].directions[dir]) !== undefined) {
         currentRoom = rooms[currentRoom].directions[dir]
     }
-    gameText.append(rooms[currentRoom].description)
+    else {
+        gameText.append('You can\'t go that way.');
+    }
+
+    describeSurroundings();
+}
+
+function parseInput(input) {
+    inputArray = input.toLowerCase().split(' ');
+
+    command = inputArray[0];
+    if (directions.includes(command)) {
+        changeRoom(command)
+    }
+    else {
+        switch (command) {
+            case 'go': case 'walk': case 'move':
+                if (inputArray.length === 1) {
+                    var command = command[0].toUpperCase() + command.slice(1).toLowerCase();
+                    gameText.append(`${command} where? <br/> <br/>`);
+                }
+                else {
+                    var dir = inputArray[1];
+                    changeRoom(dir);
+                }
+                break;
+            default:
+                gameText.append('Not sure what you mean');
+                break;
+        }
+    }
 }
 
 $(document).ready(function () {
-    $('#game-text').append(rooms[currentRoom].description)
+    describeSurroundings();
 
     $(document).keypress(function (key) {
-        if ((key.which === 13) && $('#user-input').is(':focus')) {
-            var value = $('#user-input').val().toLowerCase();
-            $('#user-input').val('')
+        if ((key.which === 13) && userInput.is(':focus')) {
+            var value = userInput.val();
+            userInput.val('');
+            parseInput(value);
 
-            switch (value) {
-                case "north": case "up":
-                    changeRoom("north");
-                    break;
-                case "south": case "down":
-                    changeRoom("south");
-                    break;
-                case "west": case "left":
-                    changeRoom("west");
-                    break;
-                case "east": case "right":
-                    changeRoom("east");
-                    break
-                default:
-                    gameText.append("<br /> Not sure what you mean.");
-            }
         };
     })
 })
