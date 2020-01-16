@@ -1,14 +1,26 @@
+@font-face {
+    font-family: "ponderosaregular";
+    src: url("ponde___-webfont.woff2") format("woff2"),
+        url("ponde___-webfont.woff") format("woff");
+    font-weight: normal;
+    font-style: normal;
+}
+
 body {
     background-color: #f7e6ae;
     color: rgb(70, 54, 30);
     font-family: monospace;
-    font-size: 12pt;
+    font-size: 11pt;
+}
+
+#game-content {
+    font-family: ponderosaregular;
 }
 
 #user-input {
+    font-family: ponderosaregular;
     border: none;
-    font-family: monospace;
-    font-size: 12pt;
+    font-size: 10pt;
     background: transparent;
     max-width: 100ch;
 }

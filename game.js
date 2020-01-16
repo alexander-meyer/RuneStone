@@ -45,7 +45,8 @@ function parseInput(input) {
                 }
                 break;
             default:
-                gameText.append('Not sure what you mean');
+                gameText.append('<p>Not sure what you mean</p>');
+                console.log(document.getElementById('#game-content').scrollHeight);
                 break;
         }
     }
