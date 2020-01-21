@@ -1,36 +1,53 @@
-var currentRoom = "meadow";
-var gameText = $('#game-text');
-var userInput = $('#user-input');
-const directions = ['north', 'south', 'west', 'east'];
+let currentRoom = "meadow";
+const gameText = $('#game-text');
+const userInput = $('#user-input');
+// array of possible cardinal directions and adjacent room names
+let possibleDirections = [];
 
 function describeSurroundings() {
     gameText.append(rooms[currentRoom].description);
 
     Object.keys(rooms[currentRoom].directions).forEach(function (dir) {
         gameText.append(`To your ${dir} lies a ${rooms[currentRoom].directions[dir]}. <br/>`);
+        possibleDirections.push(dir, rooms[currentRoom].directions[dir])
     });
 
     gameText.append('<br/>');
-
 }
 
 function changeRoom(dir) {
-    if ((rooms[currentRoom].directions[dir]) !== undefined) {
-        currentRoom = rooms[currentRoom].directions[dir]
-    }
-    else {
-        gameText.append('You can\'t go that way.');
+    const currentRoomExits = rooms[currentRoom].directions;
+
+    if ((currentRoomExits[dir]) !== undefined) {
+        currentRoom = currentRoomExits[dir]
+    } else {
+        for (let key of Object.keys(currentRoomExits)) {
+            if (dir === currentRoomExits[key]) {
+                currentRoom = dir
+            }
+        }
     }
 
+    possibleDirections = [];
     describeSurroundings();
 }
 
 function parseInput(input) {
     inputArray = input.toLowerCase().split(' ');
 
-    command = inputArray[0];
-    if (directions.includes(command)) {
-        changeRoom(command)
+    // returns first valid direction or room name from input, if any
+    function checkForValidMove(input) {
+        for (const word of input) {
+            if (possibleDirections.includes(word)) {
+                return word;
+            }
+        }
+    }
+
+    const direction = checkForValidMove(inputArray);
+
+    if (direction) {
+        changeRoom(direction);
     }
     else {
         switch (command) {
@@ -45,8 +62,7 @@ function parseInput(input) {
                 }
                 break;
             default:
-                gameText.append('<p>Not sure what you mean</p>');
-                console.log(document.getElementById('#game-content').scrollHeight);
+                gameText.append(`${input}<p>Not sure what you mean</p>`);
                 break;
         }
     }

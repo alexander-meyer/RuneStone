@@ -21,8 +21,7 @@ var rooms = {
         description:
             "<p>You stand at the entrance to a forest. Looming pines make it too dark to see - perhaps if there was a way to illuminate the path?</p>",
         directions: {
-            east: "meadow",
-            south: "cabin"
+            east: "meadow"
         },
         event: "illuminate"
     },
