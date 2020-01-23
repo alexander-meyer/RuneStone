@@ -9,16 +9,22 @@
 body {
     background-color: #f7e6ae;
     color: rgb(70, 54, 30);
-    font-family: monospace;
+    font-family: ponderosaregular, monospace;
     font-size: 11pt;
 }
 
-#game-content {
-    font-family: ponderosaregular;
+#title {
+    text-align: center;
+    font-s
+}
+
+.container {
+    width: 80%;
+    margin: auto;
 }
 
 #user-input {
-    font-family: ponderosaregular;
+    font-family: inherit;
     border: none;
     font-size: 10pt;
     background: transparent;

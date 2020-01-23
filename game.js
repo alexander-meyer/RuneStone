@@ -18,9 +18,12 @@ function describeSurroundings() {
 function changeRoom(dir) {
     const currentRoomExits = rooms[currentRoom].directions;
 
+    // north, south, ...
     if ((currentRoomExits[dir]) !== undefined) {
         currentRoom = currentRoomExits[dir]
-    } else {
+    }
+    // else entered room name directly
+    else {
         for (let key of Object.keys(currentRoomExits)) {
             if (dir === currentRoomExits[key]) {
                 currentRoom = dir
@@ -32,22 +35,25 @@ function changeRoom(dir) {
     describeSurroundings();
 }
 
+// takes user input and returns first element found in a target array
+function checkForValidMove(userInput, targetArray) {
+    for (const word of userInput) {
+        if (targetArray.includes(word)) {
+            return word;
+        }
+    }
+}
+
 function parseInput(input) {
     inputArray = input.toLowerCase().split(' ');
 
     // returns first valid direction or room name from input, if any
-    function checkForValidMove(input) {
-        for (const word of input) {
-            if (possibleDirections.includes(word)) {
-                return word;
-            }
-        }
-    }
 
-    const direction = checkForValidMove(inputArray);
 
-    if (direction) {
-        changeRoom(direction);
+    const directionToMove = checkForValidMove(inputArray, possibleDirections);
+
+    if (directionToMove) {
+        changeRoom(directionToMove);
     }
     else {
         switch (command) {
@@ -62,7 +68,7 @@ function parseInput(input) {
                 }
                 break;
             default:
-                gameText.append(`${input}<p>Not sure what you mean</p>`);
+                gameText.append(`${input}<p>Not sure what you mean</p>` + '<br/>');
                 break;
         }
     }
