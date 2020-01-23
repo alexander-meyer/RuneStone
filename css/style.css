@@ -15,11 +15,14 @@ body {
 
 #title h1 {
     text-align: center;
+    padding-bottom: 4%;
 }
 
 .container {
     width: 80%;
     margin: auto;
+    text-overflow: ellipsis;
+    max-height: 80%;
 }
 
 #user-input {
