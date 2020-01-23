@@ -2,17 +2,29 @@ let currentRoom = "meadow";
 const gameText = $('#game-text');
 const userInput = $('#user-input');
 // array of possible cardinal directions and adjacent room names
-let possibleDirections = [];
+let roomExits = [];
+let inventory = [];
 
-function describeSurroundings() {
-    gameText.append(rooms[currentRoom].description);
+$(document).ready(function () {
+    setupRoom();
 
+    $(document).keypress(function (key) {
+        if ((key.which === 13) && userInput.is(':focus')) {
+            var value = userInput.val();
+            userInput.val('');
+            parseInput(value);
+        };
+    })
+})
+
+// .text   <-- overwrites current text
+
+function setupRoom() {
     Object.keys(rooms[currentRoom].directions).forEach(function (dir) {
-        gameText.append(`To your ${dir} lies a ${rooms[currentRoom].directions[dir]}. <br/>`);
-        possibleDirections.push(dir, rooms[currentRoom].directions[dir])
+        roomExits.push(dir, rooms[currentRoom].directions[dir])
     });
 
-    gameText.append('<br/>');
+    gameText.append(rooms[currentRoom].description);
 }
 
 function changeRoom(dir) {
@@ -31,8 +43,25 @@ function changeRoom(dir) {
         }
     }
 
-    possibleDirections = [];
-    describeSurroundings();
+    roomExits = [];
+    setupRoom();
+}
+
+function displayExits() {
+
+    console.log(roomExits);
+    console.log(roomExits.length);
+    console.log(roomExits[0]);
+    console.log(roomExits[1]);
+    console.log(roomExits[2]);
+    console.log(roomExits[3]);
+    console.log(roomExits[4]);
+    console.log(roomExits[5]);
+    for (i = 0; i < roomExits.length - 1; i = i + 2) {
+        gameText.append(`To your ${roomExits[i]} lies a ${roomExits[i + 1]} <br/>`);
+    }
+
+    gameText.append('<br/>');
 }
 
 // takes user input and returns first element found in a target array
@@ -45,21 +74,22 @@ function checkForValidMove(userInput, targetArray) {
 }
 
 function parseInput(input) {
+    gameText.append(`${input} <br/> <br/>`);
+
     inputArray = input.toLowerCase().split(' ');
 
     // returns first valid direction or room name from input, if any
-
-
-    const directionToMove = checkForValidMove(inputArray, possibleDirections);
+    const directionToMove = checkForValidMove(inputArray, roomExits);
 
     if (directionToMove) {
         changeRoom(directionToMove);
     }
     else {
+        const command = inputArray[0];
         switch (command) {
             case 'go': case 'walk': case 'move':
                 if (inputArray.length === 1) {
-                    var command = command[0].toUpperCase() + command.slice(1).toLowerCase();
+                    command = command[0].toUpperCase() + command.slice(1).toLowerCase();
                     gameText.append(`${command} where? <br/> <br/>`);
                 }
                 else {
@@ -67,24 +97,12 @@ function parseInput(input) {
                     changeRoom(dir);
                 }
                 break;
+            case 'look':
+                displayExits();
+                break;
             default:
-                gameText.append(`${input}<p>Not sure what you mean</p>` + '<br/>');
+                gameText.append('Not sure what you mean' + '<br/> <br/>');
                 break;
         }
     }
 }
-
-$(document).ready(function () {
-    describeSurroundings();
-
-    $(document).keypress(function (key) {
-        if ((key.which === 13) && userInput.is(':focus')) {
-            var value = userInput.val();
-            userInput.val('');
-            parseInput(value);
-
-        };
-    })
-})
-
-// .text   <-- overwrites current text

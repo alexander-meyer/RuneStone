@@ -10,7 +10,7 @@ body {
     background-color: #f7e6ae;
     color: rgb(70, 54, 30);
     font-family: ponderosaregular, monospace;
-    font-size: 11pt;
+    font-size: 10pt;
 }
 
 #title h1 {
@@ -28,7 +28,6 @@ body {
 #user-input {
     font-family: inherit;
     border: none;
-    font-size: 10pt;
     background: transparent;
     max-width: 100ch;
 }
