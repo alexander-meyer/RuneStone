@@ -9,25 +9,37 @@
 body {
     background-color: #f7e6ae;
     color: rgb(70, 54, 30);
-    font-family: ponderosaregular, monospace;
-    font-size: 10pt;
+    font-family: monospace;
+    font-size: 12pt;
+    max-height: 80%;
+}
+
+.container {
+    max-width: 80%;
+    margin: auto;
 }
 
 #title h1 {
+    font-family: ponderosaregular, monospace;
     text-align: center;
     padding-bottom: 4%;
 }
 
-.container {
-    width: 80%;
-    margin: auto;
-    text-overflow: ellipsis;
-    max-height: 80%;
+#game-window {
+    max-width: inherit;
+    max-height: inherit;
+    position: absolute;
+    padding-bottom: 20%;
+}
+
+#game-text {
+    max-height: inherit;
 }
 
 #user-input {
     font-family: inherit;
+    font-size: inherit;
     border: none;
     background: transparent;
-    max-width: 100ch;
+    width: unset;
 }

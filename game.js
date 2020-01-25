@@ -4,6 +4,7 @@ const userInput = $('#user-input');
 // array of possible cardinal directions and adjacent room names
 let roomExits = [];
 let inventory = [];
+const movementWords = ['go', 'move', 'walk', 'run', 'travel'];
 
 $(document).ready(function () {
     setupRoom();
@@ -11,7 +12,7 @@ $(document).ready(function () {
     $(document).keypress(function (key) {
         if ((key.which === 13) && userInput.is(':focus')) {
             var value = userInput.val();
-            userInput.val('');
+            userInput.val('> ');
             parseInput(value);
         };
     })
@@ -47,16 +48,11 @@ function changeRoom(dir) {
     setupRoom();
 }
 
-function displayExits() {
+function help() {
+    gameText.append('Basic commands include \'look\', \'go ____\' and \'inventory\', though rooms may respond to other actions...<br/><br/>')
+}
 
-    console.log(roomExits);
-    console.log(roomExits.length);
-    console.log(roomExits[0]);
-    console.log(roomExits[1]);
-    console.log(roomExits[2]);
-    console.log(roomExits[3]);
-    console.log(roomExits[4]);
-    console.log(roomExits[5]);
+function displayExits() {
     for (i = 0; i < roomExits.length - 1; i = i + 2) {
         gameText.append(`To your ${roomExits[i]} lies a ${roomExits[i + 1]} <br/>`);
     }
@@ -64,45 +60,39 @@ function displayExits() {
     gameText.append('<br/>');
 }
 
-// takes user input and returns first element found in a target array
+// takes user input and returns first matching element found in a target array
 function checkForValidMove(userInput, targetArray) {
     for (const word of userInput) {
         if (targetArray.includes(word)) {
             return word;
         }
     }
+    return 'none';
 }
 
 function parseInput(input) {
     gameText.append(`${input} <br/> <br/>`);
 
-    inputArray = input.toLowerCase().split(' ');
+    inputArray = input.toLowerCase().split(' ').filter(element => element !== '>');
+
+    console.log(inputArray);
 
     // returns first valid direction or room name from input, if any
     const directionToMove = checkForValidMove(inputArray, roomExits);
 
-    if (directionToMove) {
+    if (directionToMove !== 'none') {
         changeRoom(directionToMove);
     }
+    else if (inputArray.includes('look')) {
+        displayExits();
+    }
+    else if (inputArray.includes('help')) {
+        help();
+    }
+    else if (inputArray.length === 1 && movementWords.includes(inputArray[0])) {
+        gameText.append('Where? <br/><br/>');
+    }
     else {
-        const command = inputArray[0];
-        switch (command) {
-            case 'go': case 'walk': case 'move':
-                if (inputArray.length === 1) {
-                    command = command[0].toUpperCase() + command.slice(1).toLowerCase();
-                    gameText.append(`${command} where? <br/> <br/>`);
-                }
-                else {
-                    var dir = inputArray[1];
-                    changeRoom(dir);
-                }
-                break;
-            case 'look':
-                displayExits();
-                break;
-            default:
-                gameText.append('Not sure what you mean' + '<br/> <br/>');
-                break;
-        }
+        gameText.append('Not sure what you mean <br/> <br/>');
     }
 }
