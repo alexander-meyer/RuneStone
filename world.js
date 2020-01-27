@@ -1,4 +1,8 @@
-var rooms = {
+const movementWords = ['go', 'move', 'walk', 'run', 'travel', 'exit'];
+const lookWords = ['area', 'surroundings', 'around', 'exits', 'look'];
+const inventoryWords = ['bag', 'inventory', 'items', 'stuff'];
+
+const rooms = {
     meadow: {
         description:
             "<p>You find yourself in a meadow. A gentle breeze blows through, causing the grass to dance and sway.</p>",
@@ -56,3 +60,10 @@ var rooms = {
         }
     }
 };
+
+const events = {
+    swim: {
+        text: "<p>Casting garments aside, you dive in for a refreshing dip. Hmm? Something catches your eye on the riverbed...<p/>",
+        item: "Amethyst Ring"
+    }
+} 

@@ -4,7 +4,6 @@ const userInput = $('#user-input');
 // array of possible cardinal directions and adjacent room names
 let roomExits = [];
 let inventory = [];
-const movementWords = ['go', 'move', 'walk', 'run', 'travel'];
 let first = true
 
 $(document).ready(function () {
@@ -21,7 +20,6 @@ $(document).ready(function () {
         };
     })
 })
-
 // .text   <-- overwrites current text
 
 function setupRoom() {
@@ -56,6 +54,17 @@ function help() {
     gameText.append('Basic commands include \'look\', \'go ____\' and \'inventory\', though rooms may respond to other actions...<br/><br/>')
 }
 
+function displayInventory() {
+    if (inventory.length === 0) {
+        gameText.append('Nothing in your bag.<br/><br/>')
+    }
+    else {
+        for (item in inventory) {
+            gameText.append(`${item.name}`);
+        }
+    }
+}
+
 function displayExits() {
     for (i = 0; i < roomExits.length - 1; i = i + 2) {
         gameText.append(`To your ${roomExits[i]} lies a ${roomExits[i + 1]}. <br/>`);
@@ -77,36 +86,42 @@ function checkForValidMove(userInput, targetArray) {
 function parseInput(input) {
     gameText.append(`${input} <br/> <br/>`);
 
-    inputArray = input.toLowerCase().split(' ').filter(element => element !== '>');
+    let inputArray = input.toLowerCase().split(' ').filter(element => element !== '>');
 
     console.log(inputArray);
 
-    // returns first valid direction or room name from input, if any
+    // returns first user command contained in a target array
     const directionToMove = checkForValidMove(inputArray, roomExits);
 
     if (directionToMove !== 'none') {
         changeRoom(directionToMove);
     }
-    else if (inputArray.includes('look')) {
+    else if (checkForValidMove(inputArray, lookWords) !== 'none') {
         displayExits();
+    }
+    else if (checkForValidMove(inputArray, inventoryWords) !== 'none') {
+        displayInventory();
     }
     else if (inputArray.includes('help')) {
         help();
     }
     else if (inputArray.length === 1) {
-        const command = inputArray[0];
-        if (movementWords.includes(command)) {
+        const word = inputArray[0];
+        if (movementWords.includes(word)) {
             gameText.append('Where? <br/><br/>');
         }
-        else if (command === 'check') {
+        else if (word === 'check') {
             gameText.append('Check what? <br/><br/>');
-        }
-        else if (['area', 'surroundings', 'around', 'exits'].includes(command)) {
-            displayExits();
         }
         else {
             gameText.append('Not sure what you mean. <br/> <br/>');
         }
+    }
+    else if (inputArray.includes('swimming') && currentRoom === 'river') {
+        gameText.append(events.swim.text);
+        var newItem = new Item(events.swim.item);
+        gameText.append(`* ${newItem.name} added to inventory * <br/><br/>`)
+        inventory.push(newItem);
     }
     else {
         gameText.append('Not sure what you mean. <br/> <br/>');
