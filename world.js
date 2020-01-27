@@ -5,16 +5,18 @@ const inventoryWords = ['bag', 'inventory', 'items', 'stuff'];
 const rooms = {
     meadow: {
         description:
-            "<p>You find yourself in a meadow. A gentle breeze blows through, causing the grass to dance and sway.</p>",
+            "You find yourself in a meadow. A gentle breeze blows through, causing the grass to dance and sway.",
         directions: {
             north: "hill",
             west: "forest",
             east: "river"
-        }
+        },
+        item: '',
+        event: ''
     },
     river: {
         description:
-            "<p>You come to the bank of a river. The water looks cool and pleasant.</p>",
+            "You come to the bank of a river. The water looks cool and pleasant.",
         directions: {
             west: "meadow"
         },
@@ -23,7 +25,7 @@ const rooms = {
     },
     forest: {
         description:
-            "<p>You stand at the entrance to a forest. Looming pines make it too dark to see - perhaps if there was a way to illuminate the path?</p>",
+            "You stand at the entrance to a forest. Looming pines make it too dark to see - perhaps if there was a way to illuminate the path?",
         directions: {
             east: "meadow"
         },
@@ -31,14 +33,14 @@ const rooms = {
     },
     cabin: {
         description:
-            "<p>You stumble upon an old cabin. Inside you see old bottles, rotting furniture and various papers strewn about.<p>",
+            "You stumble upon an old cabin. Inside you see old bottles, rotting furniture and various papers strewn about.",
         directions: {
             north: "forest"
         }
     },
     hill: {
         description:
-            "<p>You reach the top of a small hill. The land stretches out in front of you. A mountain looms on the horizon, dark and foreboding.<p>",
+            "You reach the top of a small hill. The land stretches out in front of you. A mountain looms on the horizon, dark and foreboding.",
         directions: {
             north: "road",
             south: "meadow"
@@ -46,7 +48,7 @@ const rooms = {
     },
     road: {
         description:
-            "<p>You come to a well-trodden road. No doubt many travellers have made their way through here.<p>",
+            "You come to a well-trodden road. No doubt many travellers have made their way through here.",
         directions: {
             north: "town",
             south: "hill"
@@ -54,7 +56,7 @@ const rooms = {
     },
     town: {
         description:
-            "<p>You come to a bustling town. A bell rings in the distance, barely discernible amidst the bustle of a day market.",
+            "You come to a bustling town. A bell rings in the distance, barely discernible amidst the bustle of a day market.",
         directions: {
             south: "road"
         }
@@ -63,7 +65,7 @@ const rooms = {
 
 const events = {
     swim: {
-        text: "<p>Casting garments aside, you dive in for a refreshing dip. Hmm? Something catches your eye on the riverbed...<p/>",
+        text: "Casting garments aside, you dive in for a refreshing dip.<br/> Hmm? Something catches your eye on the riverbed...<p/>",
         item: "Amethyst Ring"
     }
-} 
+}

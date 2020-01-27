@@ -8,9 +8,8 @@ let first = true
 
 $(document).ready(function () {
     setupRoom();
-    if (first) {
-        userInput.val('> ');
-    }
+    userInput.val('> ');
+
     $(document).keypress(function (key) {
 
         if ((key.which === 13) && userInput.is(':focus')) {
@@ -27,7 +26,7 @@ function setupRoom() {
         roomExits.push(dir, rooms[currentRoom].directions[dir])
     });
 
-    gameText.append(rooms[currentRoom].description);
+    gameText.append(`<p>${rooms[currentRoom].description}<p/>`);
 }
 
 function changeRoom(dir) {
@@ -59,9 +58,10 @@ function displayInventory() {
         gameText.append('Nothing in your bag.<br/><br/>')
     }
     else {
-        for (item in inventory) {
-            gameText.append(`${item.name}`);
+        for (const item of inventory) {
+            gameText.append(`~ ${item.name}`);
         }
+        gameText.append('<br/><br/>');
     }
 }
 
@@ -88,8 +88,6 @@ function parseInput(input) {
 
     let inputArray = input.toLowerCase().split(' ').filter(element => element !== '>');
 
-    console.log(inputArray);
-
     // returns first user command contained in a target array
     const directionToMove = checkForValidMove(inputArray, roomExits);
 
@@ -100,6 +98,7 @@ function parseInput(input) {
         displayExits();
     }
     else if (checkForValidMove(inputArray, inventoryWords) !== 'none') {
+        console.log('bag check');
         displayInventory();
     }
     else if (inputArray.includes('help')) {
@@ -120,6 +119,9 @@ function parseInput(input) {
     else if (inputArray.includes('swimming') && currentRoom === 'river') {
         gameText.append(events.swim.text);
         var newItem = new Item(events.swim.item);
+
+        console.log('newItem :', newItem);
+
         gameText.append(`* ${newItem.name} added to inventory * <br/><br/>`)
         inventory.push(newItem);
     }
