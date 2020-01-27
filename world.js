@@ -2,7 +2,7 @@ const movementWords = ['go', 'move', 'walk', 'run', 'travel', 'exit'];
 const lookWords = ['area', 'surroundings', 'around', 'exits', 'look'];
 const inventoryWords = ['bag', 'inventory', 'items', 'stuff'];
 
-const rooms = {
+const world = {
     meadow: {
         description:
             "You find yourself in a meadow. A gentle breeze blows through, causing the grass to dance and sway.",

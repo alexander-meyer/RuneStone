@@ -4,10 +4,12 @@ const userInput = $('#user-input');
 // array of possible cardinal directions and adjacent room names
 let roomExits = [];
 let inventory = [];
-let first = true
+let test = {}
+let rooms = {}
 
 $(document).ready(function () {
-    setupRoom();
+    setUpWorld();
+    setRoom();
     userInput.val('> ');
 
     $(document).keypress(function (key) {
@@ -21,16 +23,25 @@ $(document).ready(function () {
 })
 // .text   <-- overwrites current text
 
-function setupRoom() {
-    Object.keys(rooms[currentRoom].directions).forEach(function (dir) {
-        roomExits.push(dir, rooms[currentRoom].directions[dir])
+function setUpWorld() {
+    for (room in world) {
+        test[room] = world[room];
+        const newRoom = new Room(room, world[room].description, world[room].directions, world[room].item, world[room].event);
+
+    }
+}
+
+function setRoom() {
+    roomExits = [];
+    Object.keys(test[currentRoom].directions).forEach(function (dir) {
+        roomExits.push(dir, test[currentRoom].directions[dir])
     });
 
-    gameText.append(`<p>${rooms[currentRoom].description}<p/>`);
+    gameText.append(`<p>${test[currentRoom].description}<p/>`);
 }
 
 function changeRoom(dir) {
-    const currentRoomExits = rooms[currentRoom].directions;
+    const currentRoomExits = test[currentRoom].directions;
 
     // north, south, ...
     if ((currentRoomExits[dir]) !== undefined) {
@@ -45,12 +56,11 @@ function changeRoom(dir) {
         }
     }
 
-    roomExits = [];
-    setupRoom();
+    setRoom();
 }
 
 function help() {
-    gameText.append('Basic commands include \'look\', \'go ____\' and \'inventory\', though rooms may respond to other actions...<br/><br/>')
+    gameText.append('Basic commands include \'look\', \'go ____\' and \'inventory\', though test may respond to other actions...<br/><br/>')
 }
 
 function displayInventory() {
@@ -112,16 +122,18 @@ function parseInput(input) {
         else if (word === 'check') {
             gameText.append('Check what? <br/><br/>');
         }
+        else if (word === 'light') {
+            gameText.append('The lantern casts a feeble glow, but you see the outlines of a faint path amidst the trees.<br/><br/>');
+            test.forest.directions.south = 'cabin';
+            setRoom();
+        }
         else {
             gameText.append('Not sure what you mean. <br/> <br/>');
         }
     }
     else if (inputArray.includes('swimming') && currentRoom === 'river') {
         gameText.append(events.swim.text);
-        var newItem = new Item(events.swim.item);
-
-        console.log('newItem :', newItem);
-
+        const newItem = new Item(events.swim.item);
         gameText.append(`* ${newItem.name} added to inventory * <br/><br/>`)
         inventory.push(newItem);
     }
