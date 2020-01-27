@@ -4,16 +4,13 @@ const userInput = $('#user-input');
 // array of possible cardinal directions and adjacent room names
 let roomExits = [];
 let inventory = [];
-let test = {}
-let rooms = {}
+let world = {}
 
 $(document).ready(function () {
     setUpWorld();
-    setRoom();
     userInput.val('> ');
 
     $(document).keypress(function (key) {
-
         if ((key.which === 13) && userInput.is(':focus')) {
             var value = userInput.val();
             userInput.val('> ');
@@ -24,30 +21,33 @@ $(document).ready(function () {
 // .text   <-- overwrites current text
 
 function setUpWorld() {
-    for (room in world) {
-        test[room] = world[room];
-        const newRoom = new Room(room, world[room].description, world[room].directions, world[room].item, world[room].event);
-
+    for (room in worldData) {
+        const newRoom = new Room(room, worldData[room].description, worldData[room].directions, worldData[room].item, worldData[room].event);
+        world[newRoom.name] = newRoom;
     }
+
+    setRoom();
 }
 
 function setRoom() {
     roomExits = [];
-    Object.keys(test[currentRoom].directions).forEach(function (dir) {
-        roomExits.push(dir, test[currentRoom].directions[dir])
+
+    // populate global array to easily identify user directional commands
+    Object.keys(world[currentRoom].exits).forEach(function (dir) {
+        roomExits.push(dir, world[currentRoom].exits[dir])
     });
 
-    gameText.append(`<p>${test[currentRoom].description}<p/>`);
+    gameText.append(`<p>${world[currentRoom].description}<p/>`);
 }
 
 function changeRoom(dir) {
-    const currentRoomExits = test[currentRoom].directions;
+    const currentRoomExits = world[currentRoom].exits;
 
-    // north, south, ...
+    // north, south, east, etc...
     if ((currentRoomExits[dir]) !== undefined) {
         currentRoom = currentRoomExits[dir]
     }
-    // else entered room name directly
+    // river, forest, hill, etc...
     else {
         for (let key of Object.keys(currentRoomExits)) {
             if (dir === currentRoomExits[key]) {
@@ -60,7 +60,7 @@ function changeRoom(dir) {
 }
 
 function help() {
-    gameText.append('Basic commands include \'look\', \'go ____\' and \'inventory\', though test may respond to other actions...<br/><br/>')
+    gameText.append('Basic commands include \'look\', \'go ____\' and \'inventory\', though rooms may respond to other actions...<br/><br/>')
 }
 
 function displayInventory() {
@@ -124,8 +124,8 @@ function parseInput(input) {
         }
         else if (word === 'light') {
             gameText.append('The lantern casts a feeble glow, but you see the outlines of a faint path amidst the trees.<br/><br/>');
-            test.forest.directions.south = 'cabin';
-            setRoom();
+            world.forest.exits.south = 'cabin';
+            roomExits.push('south', 'cabin');
         }
         else {
             gameText.append('Not sure what you mean. <br/> <br/>');
