@@ -9,9 +9,7 @@
 body {
     background-color: #f7e6ae;
     color: rgb(70, 54, 30);
-    font-family: monospace;
-    font-size: 12pt;
-    max-height: 80%;
+    font: normal 12pt monospace;
 }
 
 .container {
@@ -20,26 +18,22 @@ body {
 }
 
 #title h1 {
-    font-family: ponderosaregular, monospace;
+    font: normal 32px ponderosaregular, monospace;
     text-align: center;
     padding-bottom: 4%;
 }
 
 #game-window {
-    max-width: inherit;
     max-height: inherit;
-    position: absolute;
-    padding-bottom: 20%;
 }
 
 #game-text {
-    max-height: inherit;
+    height: inherit;
+    overflow-y: visible;
 }
 
 #user-input {
-    font-family: inherit;
-    font-size: inherit;
+    font: inherit;
     border: none;
     background: transparent;
-    width: unset;
 }

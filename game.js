@@ -5,11 +5,15 @@ const userInput = $('#user-input');
 let roomExits = [];
 let inventory = [];
 const movementWords = ['go', 'move', 'walk', 'run', 'travel'];
+let first = true
 
 $(document).ready(function () {
     setupRoom();
-
+    if (first) {
+        userInput.val('> ');
+    }
     $(document).keypress(function (key) {
+
         if ((key.which === 13) && userInput.is(':focus')) {
             var value = userInput.val();
             userInput.val('> ');
@@ -54,7 +58,7 @@ function help() {
 
 function displayExits() {
     for (i = 0; i < roomExits.length - 1; i = i + 2) {
-        gameText.append(`To your ${roomExits[i]} lies a ${roomExits[i + 1]} <br/>`);
+        gameText.append(`To your ${roomExits[i]} lies a ${roomExits[i + 1]}. <br/>`);
     }
 
     gameText.append('<br/>');
@@ -89,10 +93,22 @@ function parseInput(input) {
     else if (inputArray.includes('help')) {
         help();
     }
-    else if (inputArray.length === 1 && movementWords.includes(inputArray[0])) {
-        gameText.append('Where? <br/><br/>');
+    else if (inputArray.length === 1) {
+        const command = inputArray[0];
+        if (movementWords.includes(command)) {
+            gameText.append('Where? <br/><br/>');
+        }
+        else if (command === 'check') {
+            gameText.append('Check what? <br/><br/>');
+        }
+        else if (['area', 'surroundings', 'around', 'exits'].includes(command)) {
+            displayExits();
+        }
+        else {
+            gameText.append('Not sure what you mean. <br/> <br/>');
+        }
     }
     else {
-        gameText.append('Not sure what you mean <br/> <br/>');
+        gameText.append('Not sure what you mean. <br/> <br/>');
     }
 }
