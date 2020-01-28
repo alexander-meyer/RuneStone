@@ -122,11 +122,12 @@ function parseInput(input) {
         else if (word === 'check') {
             gameText.append('Check what? <br/><br/>');
         }
-        else if (word === 'light') {
-            gameText.append('The lantern casts a feeble glow, but you see the outlines of a faint path amidst the trees.<br/><br/>');
-            world.forest.exits.south = 'cabin';
-            roomExits.push('south', 'cabin');
-        }
+        // else if (word === 'light') {
+        //     gameText.append(`The lantern casts a feeble glow, but you see the outlines of a faint path amidst the trees.<br/><br/> <pre>${art.lantern}<pre/>`);
+
+        //     world.forest.exits.south = 'cabin';
+        //     roomExits.push('south', 'cabin');
+        // }
         else {
             gameText.append('Not sure what you mean. <br/> <br/>');
         }
