@@ -12,7 +12,6 @@ const worldData = {
             east: "river"
         },
         item: '',
-        event: ''
     },
     river: {
         description:
@@ -65,7 +64,7 @@ const worldData = {
 
 const events = {
     swim: {
-        text: "Casting garments aside, you dive in for a refreshing dip.<br/> Hmm? Something catches your eye on the riverbed...<p/>",
+        text: "Casting garments aside, you dive in for a refreshing dip.<br/> Hmm? Something catches your eye on the riverbed...",
         item: "Amethyst Ring"
     }
 }
@@ -105,19 +104,26 @@ const art = {
     `,
     lantern: `
        .-.
-      (   )   
-   ___/'-'\\___
-   \\_________/
-    |       |
+     _(   )_    
+    /=='-'==\\
+   /_________\\
     |   )   |
     |  (_)  |
-    |  | |  |
-     \\_|_|_/
+    |  |"|  |
+   _|__|_|__|_
+   \\_________/
     `,
     key: `
        .-.     
-      (   )||||||||]
+      (   )|||||||]
        '-'    l^l
+    `,
+    ring: `
+        __
+       _\\/_
+      //^^\\\\
+      \\\\__//
+       '--'
     `
 
 

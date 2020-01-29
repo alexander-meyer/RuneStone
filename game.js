@@ -1,8 +1,7 @@
 let currentRoom = "meadow";
 const gameText = $('#game-text');
 const userInput = $('#user-input');
-// array of possible cardinal directions and adjacent room names
-let roomExits = [];
+let roomExits = []; // array of exit directions and adjacent room names
 let inventory = [];
 let world = {}
 
@@ -20,6 +19,10 @@ $(document).ready(function () {
 })
 // .text   <-- overwrites current text
 
+function makePlayer() {
+    return new Player();
+}
+
 function setUpWorld() {
     for (room in worldData) {
         const newRoom = new Room(room, worldData[room].description, worldData[room].directions, worldData[room].item, worldData[room].event);
@@ -27,6 +30,7 @@ function setUpWorld() {
     }
 
     setRoom();
+    // gameText.append(`<pre>${art.lantern}<pre/>`);
 }
 
 function setRoom() {
@@ -70,6 +74,7 @@ function displayInventory() {
     else {
         for (const item of inventory) {
             gameText.append(`~ ${item.name}`);
+            gameText.append('<br/>');
         }
         gameText.append('<br/><br/>');
     }
@@ -93,6 +98,10 @@ function checkForValidMove(userInput, targetArray) {
     return 'none';
 }
 
+function checkForEvent(parsedInput) {
+
+}
+
 function parseInput(input) {
     gameText.append(`${input} <br/> <br/>`);
 
@@ -114,31 +123,39 @@ function parseInput(input) {
     else if (inputArray.includes('help')) {
         help();
     }
-    else if (inputArray.length === 1) {
-        const word = inputArray[0];
-        if (movementWords.includes(word)) {
-            gameText.append('Where? <br/><br/>');
+    else {
+        if (world[currentRoom].event) {
+            if (inputArray.includes('swimming') && currentRoom === 'river') {
+                gameText.append(events.swim.text + "<br/><br/>");
+                if (events.swim.item !== '') {
+                    const newItem = new Item(events.swim.item);
+                    gameText.append(`* ${newItem.name} added to inventory * <br/><br/>`)
+                    events.swim.item = '';
+                    inventory.push(newItem);
+                    events.swim.text = "Casting garments aside, you dive in for a refreshing dip.";
+                }
+            }
+            else {
+                gameText.append('Not sure what you mean. <br/> <br/>');
+            }
         }
-        else if (word === 'check') {
-            gameText.append('Check what? <br/><br/>');
+        else if (inputArray.length === 1) {
+            const word = inputArray[0];
+            if (movementWords.includes(word)) {
+                gameText.append('Where? <br/><br/>');
+            }
+            else if (word === 'check') {
+                gameText.append('Check what? <br/><br/>');
+            }
+            else {
+                gameText.append('Not sure what you mean. <br/> <br/>');
+            }
         }
-        // else if (word === 'light') {
-        //     gameText.append(`The lantern casts a feeble glow, but you see the outlines of a faint path amidst the trees.<br/><br/> <pre>${art.lantern}<pre/>`);
-
-        //     world.forest.exits.south = 'cabin';
-        //     roomExits.push('south', 'cabin');
-        // }
         else {
             gameText.append('Not sure what you mean. <br/> <br/>');
         }
     }
-    else if (inputArray.includes('swimming') && currentRoom === 'river') {
-        gameText.append(events.swim.text);
-        const newItem = new Item(events.swim.item);
-        gameText.append(`* ${newItem.name} added to inventory * <br/><br/>`)
-        inventory.push(newItem);
-    }
-    else {
-        gameText.append('Not sure what you mean. <br/> <br/>');
-    }
 }
+
+
+

@@ -1,3 +1,17 @@
+class Player {
+    constructor() {
+        this.inventory = {};
+    }
+
+    addItem(item) {
+        this.inventory.item = item;
+    }
+
+    hasItem(itemName) {
+        return true ? this.inventory[itemName] !== undefined : false;
+    }
+}
+
 class Item {
     constructor(name) {
         this.name = name;
@@ -41,4 +55,17 @@ class Room {
         this._item = '';
     }
 
+    hasEvent() {
+        return true ? this.event !== undefined : false;
+    }
+
+}
+
+class Event {
+    constructor(name, item, room, triggerWords) {
+        this.name = name;
+        this.item = item;
+        this.room = room;
+        this.triggerWords = triggerWords;
+    }
 }
