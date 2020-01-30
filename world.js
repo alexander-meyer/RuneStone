@@ -19,7 +19,7 @@ const worldData = {
         directions: {
             west: "meadow"
         },
-        item: "Amethyst ring",
+        item: "Amethyst Ring",
         event: "swim"
     },
     forest: {

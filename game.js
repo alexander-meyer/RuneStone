@@ -2,11 +2,12 @@ let currentRoom = "meadow";
 const gameText = $('#game-text');
 const userInput = $('#user-input');
 let roomExits = []; // array of exit directions and adjacent room names
-let inventory = [];
+let inventory = {};
 let world = {}
 
 $(document).ready(function () {
     setUpWorld();
+    setRoom();
     userInput.val('> ');
 
     $(document).keypress(function (key) {
@@ -19,17 +20,11 @@ $(document).ready(function () {
 })
 // .text   <-- overwrites current text
 
-function makePlayer() {
-    return new Player();
-}
-
 function setUpWorld() {
     for (room in worldData) {
         const newRoom = new Room(room, worldData[room].description, worldData[room].directions, worldData[room].item, worldData[room].event);
         world[newRoom.name] = newRoom;
     }
-
-    setRoom();
     // gameText.append(`<pre>${art.lantern}<pre/>`);
 }
 
@@ -68,14 +63,15 @@ function help() {
 }
 
 function displayInventory() {
-    if (inventory.length === 0) {
+    if (Object.entries(inventory).length === 0) {
         gameText.append('Nothing in your bag.<br/><br/>')
     }
     else {
-        for (const item of inventory) {
-            gameText.append(`~ ${item.name}`);
+        Object.keys(inventory).forEach(function (item) {
+            gameText.append(`~ ${inventory[item].name}`);
             gameText.append('<br/>');
-        }
+        });
+
         gameText.append('<br/><br/>');
     }
 }
@@ -118,6 +114,7 @@ function parseInput(input) {
     }
     else if (checkForValidMove(inputArray, inventoryWords) !== 'none') {
         console.log('bag check');
+        console.log('inventory :', inventory);
         displayInventory();
     }
     else if (inputArray.includes('help')) {
@@ -131,7 +128,7 @@ function parseInput(input) {
                     const newItem = new Item(events.swim.item);
                     gameText.append(`* ${newItem.name} added to inventory * <br/><br/>`)
                     events.swim.item = '';
-                    inventory.push(newItem);
+                    inventory[newItem.name] = newItem
                     events.swim.text = "Casting garments aside, you dive in for a refreshing dip.";
                 }
             }
