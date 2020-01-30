@@ -1,14 +1,18 @@
 class Player {
     constructor() {
-        this.inventory = {};
+        this._inventory = {};
+    }
+
+    get inventory() {
+        return this._inventory;
     }
 
     addItem(item) {
-        this.inventory.item = item;
+        this._inventory.item = item;
     }
 
     hasItem(itemName) {
-        return true ? this.inventory[itemName] !== undefined : false;
+        return true ? this._inventory[itemName] !== undefined : false;
     }
 }
 
