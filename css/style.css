@@ -6,15 +6,22 @@
     font-style: normal;
 }
 
+html {
+    height: 100%;
+}
+
 body {
+    height: 97%;
     background-color: #f7e6ae;
     color: rgb(70, 54, 30);
     font: normal 12pt monospace;
 }
 
 .container {
+    padding-left: 15%;
+    float: left;
     max-width: 80%;
-    height: 80%;
+    height: 100%;
     margin: auto;
 }
 
@@ -24,8 +31,12 @@ body {
     padding-bottom: 4%;
 }
 
+#game-window {
+    height: 80%;
+}
+
 #game-text {
-    max-height: fit-content;
+    max-height: 100%;
     overflow: hidden;
     overflow-y: scroll;
     scrollbar-width: none;
