@@ -56,7 +56,7 @@ class Game {
 
     displayExits() {
         for (let i = 0; i < this.roomExits.length - 1; i = i + 2) {
-            appendText(`To your ${this.roomExits[i]} lies a ${this.roomExits[i + 1]}. <br/>`);
+            appendText(`to your ${this.roomExits[i]}, a ${this.roomExits[i + 1]}. <br/>`);
         }
 
         appendText('<br/>');
@@ -118,6 +118,10 @@ class Game {
                 }
                 else if (word === 'check') {
                     appendText('Check what? <br/><br/>');
+                }
+                else if (word === 'room') {
+                    appendText(`<p>${this.getCurrentRoomAsObject().description}<p/>`);
+                    this.displayExits();
                 }
                 else {
                     appendText('Not sure what you mean. <br/> <br/>');
