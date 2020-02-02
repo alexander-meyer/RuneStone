@@ -18,7 +18,7 @@ body {
 }
 
 .container {
-    max-width: 80%;
+    width: 80%;
     height: 88%;
     margin: auto;
 }

@@ -27,15 +27,11 @@ function help() {
 }
 
 // takes user input and returns first matching element found in a target array
-function checkForValidMove(userInput, targetArray) {
+function findValidCommand(userInput, targetArray) {
     for (const word of userInput) {
         if (targetArray.includes(word)) {
             return word;
         }
     }
     return 'none';
-}
-
-function checkForEvent(parsedInput) {
-
 }

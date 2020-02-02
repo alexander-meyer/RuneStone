@@ -11,6 +11,10 @@ class Game {
         return this.world[this.currentRoom];
     }
 
+    getCurrentRoomEvent() {
+        return events[this.getCurrentRoomAsObject().event].triggers;
+    }
+
     setUpWorld() {
         for (const room in worldData) {
             const newRoom = new Room(room, worldData[room].description, worldData[room].directions, worldData[room].item, worldData[room].event);
@@ -78,27 +82,37 @@ class Game {
         }
     }
 
+    checkForEvent(parsedInput) {
+        if (findValidCommand(parsedInput, this.getCurrentRoomAsObject().event) !== 'none') {
+
+        }
+    }
+
     parseInput(input) {
         appendTextAndScroll(`> <i>${input} <i/><br/> <br/>`);
 
         let inputArray = input.toLowerCase().split(' ').filter(element => element !== '>');
 
         // returns first user command contained in a target array
-        const directionToMove = checkForValidMove(inputArray, this.roomExits);
+        const directionToMove = findValidCommand(inputArray, this.roomExits);
 
         if (directionToMove !== 'none') {
             this.changeRoom(directionToMove);
         }
-        else if (checkForValidMove(inputArray, inventoryWords) !== 'none') {
+        else if (findValidCommand(inputArray, inventoryWords) !== 'none') {
             this.displayInventory();
         }
         else if (inputArray.includes('help')) {
             help();
         }
+        else if (inputArray.includes('dance')) {
+            appendTextAndScroll('You gyrate in place, swinging your arms back and forth. A shame no one is around to admire. <br/><br/>')
+        }
         else {
-            // if (world[currentRoom].event) {
-            // }
-            if (inputArray.length === 1) {
+            if (this.getCurrentRoomAsObject().event) {
+                this.checkForEvent();
+            }
+            else if (inputArray.length === 1) {
                 const word = inputArray[0];
                 if (movementWords.includes(word)) {
                     appendTextAndScroll('Where? <br/><br/>');

@@ -65,7 +65,8 @@ const worldData = {
 const events = {
     swim: {
         text: "Casting garments aside, you dive in for a refreshing dip.<br/> Hmm? Something catches your eye on the riverbed...",
-        item: "Amethyst Ring"
+        item: "Amethyst Ring",
+        triggers: ['swim', 'swimming', 'dive', 'jump']
     }
 }
 
