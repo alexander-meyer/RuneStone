@@ -8,7 +8,7 @@ $(document).ready(function () {
     $(document).keypress(function (key) {
         if ((key.which === 13) && userInput.is(':focus')) {
             var value = userInput.val();
-            userInput.val('> ');
+            userInput.val('');
             game.parseInput(value);
         };
     })
@@ -16,10 +16,10 @@ $(document).ready(function () {
 // .text   <-- overwrites current text
 
 
-function appendText(text) {
+function appendTextAndScroll(text) {
     $('#game-text')
         .append(text)
-        .animate({ scrollTop: (gameText).prop("scrollHeight") - gameText.height() }, 300);
+        .animate({ scrollTop: (gameText).prop("scrollHeight") - gameText.height() }, 250);
 }
 
 function help() {

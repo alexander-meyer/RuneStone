@@ -18,7 +18,7 @@ class Game {
         }
 
         this.setRoom();
-        // appendText(`<pre>${art.lantern}<pre/>`);
+        // appendTextAndScroll(`<pre>${art.lantern}<pre/>`);
     }
 
     setRoom() {
@@ -31,7 +31,7 @@ class Game {
                 this.roomExits.push(exit, currentRoom.exits[exit]);
             }
         }
-        appendText(`<p>${currentRoom.description}<p/>`);
+        gameText.append(`<p>${currentRoom.description}<p/>`);
         this.displayExits();
     }
 
@@ -56,30 +56,30 @@ class Game {
 
     displayExits() {
         for (let i = 0; i < this.roomExits.length - 1; i = i + 2) {
-            appendText(`to your ${this.roomExits[i]}, a ${this.roomExits[i + 1]}. <br/>`);
+            gameText.append(`to your ${this.roomExits[i]}, a ${this.roomExits[i + 1]}. <br/>`);
         }
 
-        appendText('<br/>');
+        appendTextAndScroll('<br/>');
     }
 
     displayInventory() {
         const inventory = this.player.inventory;
         if (Object.entries(inventory).length === 0) {
-            appendText('Nothing in your bag.<br/><br/>')
+            appendTextAndScroll('Nothing in your bag.<br/><br/>')
         }
         else {
             for (const item in inventory) {
                 if (inventory.hasOwnProperty(item)) {
-                    appendText(`~ ${inventory[item].name}`);
-                    appendText('<br/>');
+                    appendTextAndScroll(`~ ${inventory[item].name}`);
+                    appendTextAndScroll('<br/>');
                 }
             }
-            appendText('<br/><br/>');
+            appendTextAndScroll('<br/><br/>');
         }
     }
 
     parseInput(input) {
-        appendText(`${input} <br/> <br/>`);
+        appendTextAndScroll(`> <i>${input} <i/><br/> <br/>`);
 
         let inputArray = input.toLowerCase().split(' ').filter(element => element !== '>');
 
@@ -97,38 +97,25 @@ class Game {
         }
         else {
             // if (world[currentRoom].event) {
-            //     if (inputArray.includes('swimming') && currentRoom === 'river') {
-            //         appendText(events.swim.text + "<br/><br/>");
-            //         if (events.swim.item !== '') {
-            //             const newItem = new Item(events.swim.item);
-            //             appendText(`* ${newItem.name} added to inventory * <br/><br/>`)
-            //             events.swim.item = '';
-            //             inventory[newItem.name] = newItem
-            //             events.swim.text = "Casting garments aside, you dive in for a refreshing dip.";
-            //         }
-            //     }
-            //     else {
-            //         appendText('Not sure what you mean. <br/> <br/>');
-            //     }
             // }
             if (inputArray.length === 1) {
                 const word = inputArray[0];
                 if (movementWords.includes(word)) {
-                    appendText('Where? <br/><br/>');
+                    appendTextAndScroll('Where? <br/><br/>');
                 }
                 else if (word === 'check') {
-                    appendText('Check what? <br/><br/>');
+                    appendTextAndScroll('Check what? <br/><br/>');
                 }
                 else if (word === 'room') {
-                    appendText(`<p>${this.getCurrentRoomAsObject().description}<p/>`);
+                    appendTextAndScroll(`<p>${this.getCurrentRoomAsObject().description}<p/>`);
                     this.displayExits();
                 }
                 else {
-                    appendText('Not sure what you mean. <br/> <br/>');
+                    appendTextAndScroll('Not sure what you mean. <br/> <br/>');
                 }
             }
             else {
-                appendText('Not sure what you mean. <br/> <br/>');
+                appendTextAndScroll('Not sure what you mean. <br/> <br/>');
             }
         }
     }
