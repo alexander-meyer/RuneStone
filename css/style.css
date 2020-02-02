@@ -11,7 +11,7 @@ html {
 }
 
 body {
-    height: 95%;
+    height: 92%;
     background-color: #f7e6ae;
     color: rgb(70, 54, 30);
     font: normal 12pt monospace;
@@ -23,10 +23,17 @@ body {
     margin: auto;
 }
 
+#title {
+    width: 80%;
+    margin: auto;
+}
+
 #title h1 {
-    font: normal 32px ponderosaregular, monospace;
+    font: normal 40px ponderosaregular, monospace;
     text-align: center;
-    padding-bottom: 4%;
+    padding-top: 2%;
+    padding-bottom: 2%;
+    border: #000 thick;
 }
 
 #game-window {
@@ -43,10 +50,12 @@ body {
 #indicator {
     float: left;
     padding-right: 0.5em;
+    padding-top: 0.5em;
 }
 
 #user-input {
     font: inherit;
     border: none;
     background: transparent;
+    padding-top: 0.5em;
 }

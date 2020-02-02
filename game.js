@@ -31,7 +31,7 @@ class Game {
                 this.roomExits.push(exit, currentRoom.exits[exit]);
             }
         }
-        gameText.append(`<p>${currentRoom.description}<p/>`);
+        gameText.append(`${currentRoom.description}<br/><br/>`);
         this.displayExits();
     }
 
@@ -56,7 +56,7 @@ class Game {
 
     displayExits() {
         for (let i = 0; i < this.roomExits.length - 1; i = i + 2) {
-            gameText.append(`to your ${this.roomExits[i]}, a ${this.roomExits[i + 1]}. <br/>`);
+            gameText.append(`to your ${this.roomExits[i]}, a <b>${this.roomExits[i + 1]}<b/>. <br/>`);
         }
 
         appendTextAndScroll('<br/>');

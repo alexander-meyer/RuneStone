@@ -23,7 +23,7 @@ function appendTextAndScroll(text) {
 }
 
 function help() {
-    appendText('Basic commands include \'look\', \'go ____\' and \'inventory\', though rooms may respond to other actions...<br/><br/>')
+    appendTextAndScroll('Basic commands include \'room\', \'go ____\' and \'inventory\', though rooms may respond to other prompts...<br/><br/>')
 }
 
 // takes user input and returns first matching element found in a target array
