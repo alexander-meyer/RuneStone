@@ -19,14 +19,23 @@ $(document).ready(function () {
 function appendTextAndScroll(text) {
     $('#game-text')
         .append(text)
-        .animate({ scrollTop: (gameText).prop("scrollHeight") - gameText.height() }, 250);
+        .animate({ scrollTop: (gameText).prop("scrollHeight") - gameText.height() }, 350);
 }
 
 function help() {
     appendTextAndScroll('Basic commands include \'room\', \'go ____\' and \'inventory\', though rooms may respond to other prompts...<br/><br/>')
 }
 
-// takes user input and returns first matching element found in a target array
+function isValidCommand(userInput, targetArray) {
+    for (const word of userInput) {
+        if (targetArray.includes(word)) {
+            return true;
+        }
+    }
+    return false;
+}
+
+// takes user input and returns first matching element that also exists in target array
 function findValidCommand(userInput, targetArray) {
     for (const word of userInput) {
         if (targetArray.includes(word)) {

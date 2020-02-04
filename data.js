@@ -1,6 +1,7 @@
 const movementWords = ['go', 'move', 'walk', 'run', 'travel', 'exit'];
 const lookWords = ['area', 'surroundings', 'around', 'exits', 'look'];
 const inventoryWords = ['bag', 'inventory', 'items', 'stuff'];
+const directionWords = ['north', 'up', 'forward', 'west', 'left', 'right', 'east', 'south', 'down'];
 
 const worldData = {
     meadow: {
@@ -62,13 +63,7 @@ const worldData = {
     }
 };
 
-const events = {
-    swim: {
-        text: "Casting garments aside, you dive in for a refreshing dip.<br/> Hmm? Something catches your eye on the riverbed...",
-        item: "Amethyst Ring",
-        triggers: ['swim', 'swimming', 'dive', 'jump']
-    }
-}
+
 
 const art = {
     sword: `

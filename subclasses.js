@@ -8,7 +8,7 @@ class Player {
     }
 
     addItem(item) {
-        this._inventory.item = item;
+        this._inventory[item.name] = item;
     }
 
     hasItem(itemName) {
@@ -58,6 +58,9 @@ class Room {
     get event() {
         return this._event;
     }
+    set event(eventObj) {
+        this._event = eventObj;
+    }
 
     removeItem() {
         this._item = '';
@@ -69,11 +72,29 @@ class Room {
 
 }
 
-class Event {
-    constructor(name, item, room, triggerWords) {
-        this.name = name;
-        this.item = item;
-        this.room = room;
-        this.triggerWords = triggerWords;
+class GameEvent {
+    constructor(flavorText, itemReward, itemNeeded, triggerWords, eventFunction) {
+        this.flavorText = flavorText;
+        this.itemReward = itemReward;
+        this.itemNeeded = itemNeeded
+        this.triggers = triggerWords;
+        this.logic = eventFunction
+    }
+
+    conditionsMet(inputArray, player) {
+
+        if (!isValidCommand(inputArray, this.triggers)) {
+            return false;
+        }
+        else if (player.hasItem(this.itemNeeded)) {
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+
+    playEvent() {
+        this.logic;
     }
 }

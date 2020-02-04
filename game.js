@@ -2,32 +2,38 @@ class Game {
     constructor(gameText) {
         this.gameText = gameText;
         this.world = {};
-        this.currentRoom = 'meadow';
-        this.roomExits = ['north', 'hill', 'west', 'forest', 'east', 'river'];
+        this.currentRoom = '';
+        this.roomExits = [];
         this.player = new Player();
     }
 
-    getCurrentRoomAsObject() {
+    getCurrentRoomObject() {
         return this.world[this.currentRoom];
     }
 
-    getCurrentRoomEvent() {
-        return events[this.getCurrentRoomAsObject().event].triggers;
+    getCurrentEventObject() {
+        return this.getCurrentRoomObject().event;
     }
 
     setUpWorld() {
         for (const room in worldData) {
             const newRoom = new Room(room, worldData[room].description, worldData[room].directions, worldData[room].item, worldData[room].event);
+
             this.world[newRoom.name] = newRoom;
+
+            if (newRoom.hasEvent()) {
+                const eventData = events[newRoom.event];
+                this.world[newRoom.name].event = new GameEvent(eventData.flavorText, eventData.item, eventData.itemNeeded, eventData.triggers, eventData.logic)
+            }
         }
 
+        this.currentRoom = 'meadow';
         this.setRoom();
-        // appendTextAndScroll(`<pre>${art.lantern}<pre/>`);
     }
 
     setRoom() {
         this.roomExits = [];
-        const currentRoom = this.getCurrentRoomAsObject();
+        const currentRoom = this.getCurrentRoomObject();
 
         // populate global array to easily identify user directional commands
         for (const exit in currentRoom.exits) {
@@ -40,27 +46,44 @@ class Game {
     }
 
     changeRoom(dir) {
-        const currentRoomExits = this.getCurrentRoomAsObject().exits;
+        switch (dir) {
+            case 'forward': case 'up':
+                dir = 'north';
+                break;
+            case 'left':
+                dir = 'west';
+                break;
+            case 'right':
+                dir = 'east';
+                break;
+            case 'down':
+                dir = 'south';
+                break
+        }
+        const currentRoomExits = this.getCurrentRoomObject().exits;
 
         // north, south, east, etc...
         if ((currentRoomExits[dir]) !== undefined) {
             this.currentRoom = currentRoomExits[dir];
+            this.setRoom();
         }
         // river, forest, hill, etc...
-        else {
+        else if (this.roomExits.includes(dir)) {
             for (let key of Object.keys(currentRoomExits)) {
                 if (dir === currentRoomExits[key]) {
                     this.currentRoom = dir;
                 }
             }
+            this.setRoom();
         }
-
-        this.setRoom();
+        else {
+            appendTextAndScroll('you can\'t go that way.<br/><br/>');
+        }
     }
 
     displayExits() {
         for (let i = 0; i < this.roomExits.length - 1; i = i + 2) {
-            gameText.append(`to your ${this.roomExits[i]}, a <b>${this.roomExits[i + 1]}<b/>. <br/>`);
+            gameText.append(`to the ${this.roomExits[i]} lies a <b>${this.roomExits[i + 1]}<b/>. <br/>`);
         }
 
         appendTextAndScroll('<br/>');
@@ -82,9 +105,14 @@ class Game {
         }
     }
 
-    checkForEvent(parsedInput) {
-        if (findValidCommand(parsedInput, this.getCurrentRoomAsObject().event) !== 'none') {
-
+    tryEvent(parsedInput) {
+        const currentEvent = this.getCurrentEventObject();
+        // user commands match event trigger
+        if (currentEvent.conditionsMet(parsedInput, this.player)) {
+            currentEvent.logic(this.player, currentEvent.flavorText, currentEvent.itemReward);
+        }
+        else {
+            appendTextAndScroll('not sure what you mean. <br/> <br/>');
         }
     }
 
@@ -94,7 +122,7 @@ class Game {
         let inputArray = input.toLowerCase().split(' ').filter(element => element !== '>');
 
         // returns first user command contained in a target array
-        const directionToMove = findValidCommand(inputArray, this.roomExits);
+        const directionToMove = findValidCommand(inputArray, directionWords.concat(this.roomExits));
 
         if (directionToMove !== 'none') {
             this.changeRoom(directionToMove);
@@ -106,11 +134,11 @@ class Game {
             help();
         }
         else if (inputArray.includes('dance')) {
-            appendTextAndScroll('You gyrate in place, swinging your arms back and forth. A shame no one is around to admire. <br/><br/>')
+            appendTextAndScroll('you gyrate in place, swinging your arms back and forth. A shame no one is around to admire. <br/><br/>')
         }
         else {
-            if (this.getCurrentRoomAsObject().event) {
-                this.checkForEvent();
+            if (this.getCurrentRoomObject().event) {
+                this.tryEvent(inputArray);
             }
             else if (inputArray.length === 1) {
                 const word = inputArray[0];
@@ -121,15 +149,15 @@ class Game {
                     appendTextAndScroll('Check what? <br/><br/>');
                 }
                 else if (word === 'room') {
-                    appendTextAndScroll(`<p>${this.getCurrentRoomAsObject().description}<p/>`);
+                    appendTextAndScroll(`<p>${this.getCurrentRoomObject().description}<p/>`);
                     this.displayExits();
                 }
                 else {
-                    appendTextAndScroll('Not sure what you mean. <br/> <br/>');
+                    appendTextAndScroll('not sure what you mean. <br/> <br/>');
                 }
             }
             else {
-                appendTextAndScroll('Not sure what you mean. <br/> <br/>');
+                appendTextAndScroll('not sure what you mean. <br/> <br/>');
             }
         }
     }
