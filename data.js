@@ -1,65 +1,60 @@
 const movementWords = ['go', 'move', 'walk', 'run', 'travel', 'exit'];
 const lookWords = ['area', 'surroundings', 'around', 'exits', 'look'];
 const inventoryWords = ['bag', 'inventory', 'items', 'stuff'];
-const directionWords = ['north', 'up', 'forward', 'west', 'left', 'right', 'east', 'south', 'down'];
+const directionWords = ['north', 'forward', 'west', 'left', 'right', 'east', 'south',];
 
 const worldData = {
+    temple: {
+        description: "You stand in front of a temple. Well-tended pear trees line the path leading outside.",
+        directions: {
+            north: 'meadow'
+        },
+        nearbyText: 'you can see familiar outlines of home',
+        examine: {
+            trees: 'Many appear to be sagging under the weight of all that fruit.'
+        },
+        item: 'Pear',
+        event: 'pear'
+    },
     meadow: {
         description:
             "You find yourself in a meadow. A gentle breeze blows through, causing the grass to dance and sway.",
         directions: {
-            north: "hill",
-            west: "forest",
-            east: "river"
+            west: "trees",
+            east: "water",
+            south: 'temple'
         },
+        nearbyText: 'lies a small clearing',
+        examine: '',
         item: '',
     },
-    river: {
+    water: {
         description:
-            "You come to the bank of a river. The water looks cool and pleasant.",
+            "You come to the bank of the river Kor. The water looks cool and pleasant.",
         directions: {
             west: "meadow"
         },
+        nearbyText: 'you can hear the sound of rushing water',
+        examine: '',
         item: "Amethyst Ring",
         event: "swim"
     },
-    forest: {
+    trees: {
         description:
             "You stand at the entrance to a forest. Looming pines make it too dark to see - perhaps if there was a way to illuminate the path?",
         directions: {
             east: "meadow"
         },
-        event: "illuminate"
+        nearbyText: 'you see a thick cropping of trees',
+        examine: ''
     },
     cabin: {
         description:
             "You stumble upon an old cabin. Inside you see old bottles, rotting furniture and various papers strewn about.",
         directions: {
-            north: "forest"
-        }
-    },
-    hill: {
-        description:
-            "You reach the top of a small hill. The land stretches out in front of you. A mountain looms on the horizon, dark and foreboding.",
-        directions: {
-            north: "road",
-            south: "meadow"
-        }
-    },
-    road: {
-        description:
-            "You come to a well-trodden road. No doubt many travellers have made their way through here.",
-        directions: {
-            north: "town",
-            south: "hill"
-        }
-    },
-    town: {
-        description:
-            "You come to a bustling town. A bell rings in the distance, barely discernible amidst the bustle of a day market.",
-        directions: {
-            south: "road"
-        }
+            north: "trees"
+        },
+        examine: ''
     }
 };
 
@@ -120,6 +115,14 @@ const art = {
       //^^\\\\
       \\\\__//
        '--'
+    `,
+    pear: `
+         )
+        _|_
+       /   \\ 
+      /   # \\
+     (   ##  ) 
+      ',___,'
     `,
     title: `
              ____________________________________________________

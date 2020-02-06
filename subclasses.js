@@ -28,9 +28,11 @@ class Item {
 }
 
 class Room {
-    constructor(name, description, exits, items, event) {
+    constructor(name, description, nearbyText, examine, exits, items, event) {
         this.name = name;
         this._description = description;
+        this.nearbyText = nearbyText;
+        this.examine = examine
         this._exits = exits;
         this._items = items;
         this._event = event;
@@ -73,25 +75,13 @@ class Room {
 }
 
 class GameEvent {
-    constructor(flavorText, itemReward, itemNeeded, triggerWords, eventFunction) {
+    constructor(flavorText, itemReward, itemNeeded, triggerWords, conditionsMet, eventFunction) {
         this.flavorText = flavorText;
         this.itemReward = itemReward;
         this.itemNeeded = itemNeeded
         this.triggers = triggerWords;
+        this.conditionsMet = conditionsMet;
         this.logic = eventFunction
-    }
-
-    conditionsMet(inputArray, player) {
-
-        if (!isValidCommand(inputArray, this.triggers)) {
-            return false;
-        }
-        else if (player.hasItem(this.itemNeeded)) {
-            return false;
-        }
-        else {
-            return true;
-        }
     }
 
     playEvent() {

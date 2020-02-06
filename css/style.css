@@ -55,6 +55,7 @@ body {
 
 #user-input {
     font: inherit;
+    font-style: italic;
     border: none;
     background: transparent;
     padding-top: 0.5em;

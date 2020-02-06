@@ -23,7 +23,7 @@ function appendTextAndScroll(text) {
 }
 
 function help() {
-    appendTextAndScroll('Basic commands include \'room\', \'go ____\' and \'inventory\', though rooms may respond to other prompts...<br/><br/>')
+    appendTextAndScroll('This game involves traversing a variety of areas and interacting with the environment to solve puzzles and explore. The visible exits for each area are listed, though some rooms may respond to other prompts...<br/><br/>')
 }
 
 function isValidCommand(userInput, targetArray) {
@@ -43,4 +43,8 @@ function findValidCommand(userInput, targetArray) {
         }
     }
     return 'none';
+}
+
+function badCommand() {
+    appendTextAndScroll('not sure what you mean. <br/> <br/>');
 }
