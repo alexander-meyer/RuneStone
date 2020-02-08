@@ -15,7 +15,7 @@ const events = {
             }
         }
     },
-    pear: {
+    Pluck: {
         flavorText: 'You reach up and pluck a particularly fine specimen, dark red and smelling of sweetness. <br/>',
         item: 'Pear',
         triggers: ['pear', 'take', 'pick', 'pluck', 'grab'],

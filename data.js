@@ -4,55 +4,58 @@ const inventoryWords = ['bag', 'inventory', 'items', 'stuff'];
 const directionWords = ['north', 'forward', 'west', 'left', 'right', 'east', 'south',];
 
 const worldData = {
-    temple: {
-        description: "You stand in front of a temple. Well-tended pear trees line the path leading outside.",
-        directions: {
+    shrine: {
+        flavorText:
+            'You stand in front of a shrine. A verdant orchard, obviously well cared for, surrounds you on all sides. One pear tree in particular is practically scraping the grass with its drooping branches',
+        nearbyText:
+            'you see an orchard enclosing a small temple',
+        exits: {
             north: 'meadow'
         },
-        nearbyText: 'you can see familiar outlines of home',
-        examine: {
-            trees: 'Many appear to be sagging under the weight of all that fruit.'
-        },
+        examine: { tree: 'it\'s a tree.' },
         item: 'Pear',
-        event: 'pear'
+        event: 'Pluck'
     },
     meadow: {
-        description:
-            "You find yourself in a meadow. A gentle breeze blows through, causing the grass to dance and sway.",
-        directions: {
-            west: "trees",
-            east: "water",
+        flavorText:
+            'You find yourself in a meadow. A gentle breeze blows through, causing the grass to dance and sway.',
+        nearbyText:
+            'lies a small clearing',
+        exits: {
+            west: 'trees',
+            east: 'water',
             south: 'temple'
         },
-        nearbyText: 'lies a small clearing',
         examine: '',
         item: '',
     },
     water: {
-        description:
-            "You come to the bank of the river Kor. The water looks cool and pleasant.",
-        directions: {
-            west: "meadow"
+        flavorText:
+            'You come to the bank of the river Kor. The water looks cool and pleasant.',
+        nearbyText:
+            'you can hear the sound of rushing water',
+        exits: {
+            west: 'meadow'
         },
-        nearbyText: 'you can hear the sound of rushing water',
         examine: '',
-        item: "Amethyst Ring",
-        event: "swim"
+        item: 'Amethyst Ring',
+        event: 'swim'
     },
     trees: {
-        description:
-            "You stand at the entrance to a forest. Looming pines make it too dark to see - perhaps if there was a way to illuminate the path?",
-        directions: {
-            east: "meadow"
+        flavorText:
+            'You stand at the entrance to a forest. Looming pines make it too dark to see - perhaps if there was a way to illuminate the path?',
+        nearbyText:
+            'you see a thick cropping of trees',
+        exits: {
+            east: 'meadow'
         },
-        nearbyText: 'you see a thick cropping of trees',
         examine: ''
     },
     cabin: {
-        description:
-            "You stumble upon an old cabin. Inside you see old bottles, rotting furniture and various papers strewn about.",
-        directions: {
-            north: "trees"
+        flavorText:
+            'You stumble upon an old cabin. Inside you see old bottles, rotting furniture and various papers strewn about.',
+        exits: {
+            north: 'trees'
         },
         examine: ''
     }
@@ -100,14 +103,14 @@ const art = {
    /_________\\
     |   )   |
     |  (_)  |
-    |  |"|  |
+    |  |'|  |
    _|__|_|__|_
    \\_________/
     `,
     key: `
        .-.     
       (   )|||||]
-       '-'   l"l
+       '-'   l'l
     `,
     ring: `
         __

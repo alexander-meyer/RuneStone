@@ -28,22 +28,21 @@ class Item {
 }
 
 class Room {
-    constructor(name, description, nearbyText, examine, exits, items, event) {
-        this.name = name;
-        this._description = description;
+    constructor(flavorText, nearbyText, examine, exits, items, event) {
+        this._flavorText = flavorText;
         this.nearbyText = nearbyText;
         this.examine = examine
         this._exits = exits;
-        this._items = items;
+        this._item = items;
         this._event = event;
     }
 
     // necessary setters and getters
-    get description() {
-        return this._description;
+    get flavorText() {
+        return this._flavorText;
     }
-    set description(newDescrip) {
-        this._description = newDescrip;
+    set flavorText(newDescrip) {
+        this._flavorText = newDescrip;
     }
 
     get exits() {

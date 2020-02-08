@@ -7,33 +7,37 @@ class Game {
         this.player = new Player();
     }
 
-    getCurrentRoomObject() {
+    getCurrentRoom() {
         return this.world[this.currentRoom];
     }
 
-    getCurrentEventObject() {
-        return this.getCurrentRoomObject().event;
+    getCurrentEvent() {
+        return this.getCurrentRoom().event;
+    }
+
+    getInteractives() {
+        return this.getCurrentRoom().examine;
     }
 
     setUpWorld() {
         for (const room in worldData) {
-            const newRoom = new Room(room, worldData[room].description, worldData[room].nearbyText, worldData[room].examine, worldData[room].directions, worldData[room].item, worldData[room].event);
+            const newRoomObject = new Room(worldData[room].flavorText, worldData[room].nearbyText, worldData[room].examine, worldData[room].exits, worldData[room].item, worldData[room].event);
 
-            this.world[newRoom.name] = newRoom;
+            this.world[room] = newRoomObject;
 
-            if (newRoom.hasEvent()) {
-                const eventData = events[newRoom.event];
-                this.world[newRoom.name].event = new GameEvent(eventData.flavorText, eventData.item, eventData.itemNeeded, eventData.triggers, eventData.conditionsMet, eventData.logic)
+            if (newRoomObject.hasEvent()) {
+                const eventData = events[newRoomObject.event];
+                this.world[room].event = new GameEvent(eventData.flavorText, eventData.item, eventData.itemNeeded, eventData.triggers, eventData.conditionsMet, eventData.logic)
             }
         }
 
-        this.currentRoom = 'temple';
+        this.currentRoom = 'shrine';
         this.setRoom();
     }
 
     setRoom() {
         this.roomExits = [];
-        const currentRoom = this.getCurrentRoomObject();
+        const currentRoom = this.getCurrentRoom();
 
         // populate global array to easily identify user directional commands
         for (const exit in currentRoom.exits) {
@@ -41,7 +45,7 @@ class Game {
                 this.roomExits.push(exit, currentRoom.exits[exit]);
             }
         }
-        gameText.append(`${currentRoom.description}<br/><br/>`);
+        gameText.append(`${currentRoom.flavorText}<br/><br/>`);
         this.displayExits();
     }
 
@@ -57,7 +61,7 @@ class Game {
                 dir = 'east';
                 break;
         }
-        const currentRoomExits = this.getCurrentRoomObject().exits;
+        const currentRoomExits = this.getCurrentRoom().exits;
 
         // north, south, east, etc...
         if ((currentRoomExits[dir]) !== undefined) {
@@ -103,19 +107,29 @@ class Game {
     }
 
     examine(parsedInput) {
-        const room = this.getCurrentRoomObject();
-        const objectToInvestigate = findValidCommand(parsedInput, Object.keys(room.examine));
 
-        if (objectToInvestigate !== 'none') {
-            appendTextAndScroll(room.examine[objectToInvestigate] + '<br/><br/>');
+        const validElement = findValidCommand(parsedInput, Object.keys(this.getInteractives()));
+
+        if (validElement !== 'none') {
+            appendTextAndScroll(this.getInteractives()[validElement] + '<br/><br/>');
         }
         else {
-            badCommand();
+            appendTextAndScroll('Not much to tell, really. <br/> <br/>');
         }
+
+
+        // const objectToInvestigate = findValidCommand(parsedInput, Object.keys(room.examine));
+
+        // if (objectToInvestigate !== 'none') {
+        //     appendTextAndScroll(room.examine[objectToInvestigate] + '<br/><br/>');
+        // }
+        // else {
+        //     badCommand();
+        // }
     }
 
     tryEvent(parsedInput) {
-        const currentEvent = this.getCurrentEventObject();
+        const currentEvent = this.getCurrentEvent();
         // user commands match event trigger
         if (currentEvent.conditionsMet(parsedInput, currentEvent.triggers, this.player)) {
 
@@ -146,14 +160,11 @@ class Game {
         else if (parsedInput.includes('dance')) {
             appendTextAndScroll('you gyrate in place, swinging your arms back and forth. A shame no one is around to admire. <br/><br/>')
         }
-        else if (parsedInput.includes('examine')) {
-            this.examine(parsedInput);
+        else if (parsedInput[0] === 'examine') {
+            this.examine(parsedInput.slice(1));
         }
         else {
-            if (this.getCurrentRoomObject().event) {
-                this.tryEvent(parsedInput);
-            }
-            else if (parsedInput.length === 1) {
+            if (parsedInput.length === 1) {
                 const word = parsedInput[0];
                 if (movementWords.includes(word)) {
                     appendTextAndScroll('where? <br/><br/>');
@@ -162,15 +173,18 @@ class Game {
                     appendTextAndScroll('check what? <br/><br/>');
                 }
                 else if (word === 'room') {
-                    appendTextAndScroll(`<p>${this.getCurrentRoomObject().description}<p/>`);
+                    appendTextAndScroll(`<p>${this.getCurrentRoom().flavorText}<p/>`);
                     this.displayExits();
                 }
                 else {
-                    appendTextAndScroll('not sure what you mean. <br/> <br/>');
+                    badCommand();
                 }
             }
+            else if (this.getCurrentRoom().event) {
+                this.tryEvent(parsedInput);
+            }
             else {
-                appendTextAndScroll('not sure what you mean. <br/> <br/>');
+                badCommand();
             }
         }
     }
