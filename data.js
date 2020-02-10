@@ -4,15 +4,17 @@ const inventoryWords = ['bag', 'inventory', 'items', 'stuff'];
 const directionWords = ['north', 'forward', 'west', 'left', 'right', 'east', 'south',];
 
 const worldData = {
-    shrine: {
+    orchard: {
         flavorText:
-            'You stand in front of a shrine. A verdant orchard, obviously well cared for, surrounds you on all sides. One pear tree in particular is practically scraping the grass with its drooping branches',
+            'You stand in the midst of a lush orchard. <br/><br/> Fruit trees surround you on all sides, suffusing the air with a delightful aroma. One tree in particular, covered in white blossoms, dwarfs the others.',
         nearbyText:
-            'you see an orchard enclosing a small temple',
+            'you see a field of bright color',
         exits: {
             north: 'meadow'
         },
-        examine: { tree: 'it\'s a tree.' },
+        examine: {
+            tree: 'Small white flowers cover the entire tree. Looking at it fills you with a sense of calm. You notice several ripe pears dangling from a low-hanging branch.'
+        },
         item: 'Pear',
         event: 'Pluck'
     },
@@ -24,16 +26,16 @@ const worldData = {
         exits: {
             west: 'trees',
             east: 'water',
-            south: 'temple'
+            south: 'orchard'
         },
-        examine: '',
+        examine: {},
         item: '',
     },
     water: {
         flavorText:
-            'You come to the bank of the river Kor. The water looks cool and pleasant.',
+            'You come to the bank of a river.  The water looks cool and pleasant. ',
         nearbyText:
-            'you can hear the sound of rushing water',
+            'you hear the sound of rushing water',
         exits: {
             west: 'meadow'
         },

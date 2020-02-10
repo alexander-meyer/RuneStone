@@ -31,7 +31,7 @@ class Game {
             }
         }
 
-        this.currentRoom = 'shrine';
+        this.currentRoom = 'meadow';
         this.setRoom();
     }
 
@@ -83,6 +83,7 @@ class Game {
     }
 
     displayExits() {
+        console.log('this.roomExits :', this.roomExits);
         for (let i = 0; i < this.roomExits.length - 1; i = i + 2) {
             gameText.append(`to the <b>${this.roomExits[i]}</b> ${this.world[this.roomExits[i + 1]].nearbyText}. <br/>`);
         }
