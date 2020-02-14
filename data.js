@@ -4,6 +4,13 @@ const inventoryWords = ['bag', 'inventory', 'items', 'stuff'];
 const directionWords = ['north', 'forward', 'west', 'left', 'right', 'east', 'south',];
 
 const worldData = {
+    bees: {
+        flavorText:
+            'You come to a field of golden dandelions. <br/><br/> Honeybees drift from plant to plant, giving rise to a dull buzzing sound throughout the area. In the center of the field lie several strange boxes, and bent over one of these is a hooded figure.',
+        nearbyText:
+            'you hear a gentle humming sound',
+        exits: {},
+    },
     orchard: {
         flavorText:
             'You stand in the midst of a lush orchard. <br/><br/> Fruit trees surround you on all sides, suffusing the air with a delightful aroma. One tree in particular, covered in white blossoms, dwarfs the others.',
