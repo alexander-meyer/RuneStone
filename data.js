@@ -4,9 +4,21 @@ const inventoryWords = ['bag', 'inventory', 'items', 'stuff'];
 const directionWords = ['north', 'forward', 'west', 'left', 'right', 'east', 'south',];
 
 const worldData = {
+    shrine: {
+        flavorText:
+            'You arrive at a small shrine. <br/><br/> It appears old, but well taken care of. Carvings decorate the outside, and inside you can see candles surrounding a raised wooden plinth. A figure sits under the rood, legs crossed.',
+        nearbyText:
+            'you see the curved roof of a pagoda',
+        exits: {},
+        event: 'Tribute'
+    },
+    bridge: {
+        flavorText:
+            ''
+    },
     bees: {
         flavorText:
-            'You come to a field of golden dandelions. <br/><br/> Honeybees drift from plant to plant, giving rise to a dull buzzing sound throughout the area. In the center of the field lie several strange boxes, and bent over one of these is a hooded figure.',
+            'You stand in a garden of golden dandelions. <br/><br/> Honeybees drift from plant to plant, giving rise to a dull buzzing sound throughout the area. In the center of the field lie several strange boxes, and bent over one of these is a hooded figure.',
         nearbyText:
             'you hear a gentle humming sound',
         exits: {},
