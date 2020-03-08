@@ -9,8 +9,7 @@ const worldData = {
             'You arrive at a small shrine. <br/><br/> It appears old, but well taken care of. Carvings decorate the outside, and inside you can see candles surrounding a raised wooden plinth. A figure sits under the rood, legs crossed.',
         nearbyText:
             'you see the curved roof of a pagoda',
-        exits: {},
-        event: 'Tribute'
+        exits: {}
     },
     bridge: {
         flavorText:
