@@ -19,9 +19,9 @@ const worldData = {
     },
     structure: {
         flavorText:
-            'You arrive at a modest wooden shrine. <br/><br/> The wooden walls are old, the structure itself possessing a quiet sort of charisma. It appears well cared for. Inside you see a raised altar surrounded by candles.',
+            'You arrive at a modest shrine. <br/><br/> The wooden walls are old and the building itself exudes a quiet sort of charisma. It appears well cared for. Inside you see a raised altar surrounded by candles.',
         nearbyText:
-            'lies some sort of dwelling',
+            'stands a small structure',
         exits: {
             north: 'meadow',
             west: 'orchard'

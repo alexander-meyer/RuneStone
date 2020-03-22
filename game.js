@@ -160,7 +160,7 @@ class Game {
         else if (parsedInput.includes('dance')) {
             appendTextAndScroll('you gyrate in place, swinging your arms back and forth. A shame no one is around to admire. <br/><br/>')
         }
-        else if (parsedInput[0] === 'examine') {
+        else if (['examine', 'investigate'].includes(parsedInput[0])) {
             this.examine(parsedInput.slice(1));
         }
         else {

@@ -9,6 +9,7 @@ const events = {
         itemNeeded: 'none',
         logic(player, flavorText, itemReward) {
             appendTextAndScroll(flavorText);
+
             if (!player.hasItem(itemReward)) {
                 player.addItem(new Item(itemReward));
                 appendTextAndScroll(`Something catches your eye on the riverbed...<br/><br/> <pre>${art.ring}<pre/> * Amethyst Ring added to inventory *<br/>`);
@@ -20,11 +21,16 @@ const events = {
         item: 'Pear',
         triggers: ['pear', 'take', 'pick', 'pluck', 'grab'],
         conditionsMet(playerInput, triggers) {
+
+            if (!Array.isArray(playerInput)) {
+                playerInput = [playerInput];
+            }
             const filteredArray = playerInput.filter(word => triggers.includes(word))
             return (filteredArray.length > 1 && filteredArray.includes('pear'));
         },
         itemNeeded: '',
         logic(player, flavorText, itemReward) {
+
             if (player.hasItem(itemReward)) {
                 appendTextAndScroll('Best not to be greedy. <br/><br/>')
             }
