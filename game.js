@@ -83,7 +83,6 @@ class Game {
     }
 
     displayExits() {
-        console.log('this.roomExits :', this.roomExits);
         for (let i = 0; i < this.roomExits.length - 1; i = i + 2) {
             gameText.append(`to the <b>${this.roomExits[i]}</b> ${this.world[this.roomExits[i + 1]].nearbyText}. <br/>`);
         }
@@ -167,6 +166,7 @@ class Game {
         else {
             if (parsedInput.length === 1) {
                 const word = parsedInput[0];
+
                 if (movementWords.includes(word)) {
                     appendTextAndScroll('where? <br/><br/>');
                 }
@@ -176,6 +176,9 @@ class Game {
                 else if (word === 'room') {
                     appendTextAndScroll(`<p>${this.getCurrentRoom().flavorText}<p/>`);
                     this.displayExits();
+                }
+                else if (this.getCurrentEvent().triggers.includes(word)) {
+                    this.tryEvent(word);
                 }
                 else {
                     badCommand();

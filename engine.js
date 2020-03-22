@@ -27,12 +27,17 @@ function help() {
 }
 
 function isValidCommand(userInput, targetArray) {
-    for (const word of userInput) {
-        if (targetArray.includes(word)) {
-            return true;
+    if (!Array.isArray(userInput)) {
+        return targetArray.includes(userInput)
+    } else {
+        for (const word of userInput) {
+            console.log(word);
+            if (targetArray.includes(word)) {
+                return true;
+            }
         }
+        return false;
     }
-    return false;
 }
 
 // takes user input and returns first matching element that also exists in target array

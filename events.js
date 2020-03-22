@@ -1,6 +1,6 @@
 const events = {
     swim: {
-        flavorText: "You leap gracefully off a protruding rock, landing with minimal splash. <br/> An applause-worthy dive.<br/> <br/>",
+        flavorText: "You leap gracefully off a protruding rock, landing with minimal splash. An applause-worthy dive.<br/> <br/>",
         item: "Amethyst Ring",
         triggers: ['swim', 'swimming', 'dive', 'jump'],
         conditionsMet(playerInput, triggers) {

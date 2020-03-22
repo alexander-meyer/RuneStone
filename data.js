@@ -4,72 +4,82 @@ const inventoryWords = ['bag', 'inventory', 'items', 'stuff'];
 const directionWords = ['north', 'forward', 'west', 'left', 'right', 'east', 'south',];
 
 const worldData = {
-    shrine: {
+    meadow: {
         flavorText:
-            'You arrive at a small shrine. <br/><br/> It appears old, but well taken care of. Carvings decorate the outside, and inside you can see candles surrounding a raised wooden plinth. A figure sits under the rood, legs crossed.',
+            'You find yourself in a meadow. <br/><br/> A gentle breeze blows through, causing the grass to dance and sway.',
         nearbyText:
-            'you see the curved roof of a pagoda',
-        exits: {}
+            'lies a small clearing',
+        exits: {
+            north: 'hill',
+            east: 'water',
+            south: 'structure'
+        },
+        examine: {},
+        item: '',
     },
-    bridge: {
+    structure: {
         flavorText:
-            ''
-    },
-    bees: {
-        flavorText:
-            'You stand in a garden of golden dandelions. <br/><br/> Honeybees drift from plant to plant, giving rise to a dull buzzing sound throughout the area. In the center of the field lie several strange boxes, and bent over one of these is a hooded figure.',
+            'You arrive at a modest wooden shrine. <br/><br/> The wooden walls are old, the structure itself possessing a quiet sort of charisma. It appears well cared for. Inside you see a raised altar surrounded by candles.',
         nearbyText:
-            'you hear a gentle humming sound',
-        exits: {},
+            'lies some sort of dwelling',
+        exits: {
+            north: 'meadow',
+            west: 'orchard'
+        },
+        examine: {
+            altar: 'There\'s a small groove in the center, about the size of a fist. You get the sense that something used to rest in this spot.'
+        }
     },
     orchard: {
         flavorText:
             'You stand in the midst of a lush orchard. <br/><br/> Fruit trees surround you on all sides, suffusing the air with a delightful aroma. One tree in particular, covered in white blossoms, dwarfs the others.',
         nearbyText:
-            'you see a field of bright color',
-        exits: {
-            north: 'meadow'
-        },
+            'you see some sort of orchard',
+        exits: {},
         examine: {
             tree: 'Small white flowers cover the entire tree. Looking at it fills you with a sense of calm. You notice several ripe pears dangling from a low-hanging branch.'
         },
         item: 'Pear',
         event: 'Pluck'
     },
-    meadow: {
-        flavorText:
-            'You find yourself in a meadow. A gentle breeze blows through, causing the grass to dance and sway.',
-        nearbyText:
-            'lies a small clearing',
-        exits: {
-            west: 'trees',
-            east: 'water',
-            south: 'orchard'
-        },
-        examine: {},
-        item: '',
-    },
     water: {
         flavorText:
-            'You come to the bank of a river.  The water looks cool and pleasant. ',
+            'You come to the bank of a river. <br/><br/> Swathes of cattails line the shore, swaying in the breeze. The water looks cool and pleasant.',
         nearbyText:
             'you hear the sound of rushing water',
         exits: {
             west: 'meadow'
         },
-        examine: '',
+        examine: {},
         item: 'Amethyst Ring',
         event: 'swim'
     },
+    hill: {
+        flavorText:
+            'You reach the top of the hill. <br/><br/> Trees obscure much of your view, but you can see a thick plume of smoke far off to the northeast.',
+        nearbyText:
+            'a large hill juts out of the earth',
+        exits: {
+            north: 'trees'
+        },
+        examine: {}
+    },
     trees: {
         flavorText:
-            'You stand at the entrance to a forest. Looming pines make it too dark to see - perhaps if there was a way to illuminate the path?',
+            'You stand at the entrance to a forest. <br/><br/> Looming pines make it too dark to see - perhaps if there was a way to illuminate the path?',
         nearbyText:
-            'you see a thick cropping of trees',
+            'stands a particularly thick cropping of trees',
         exits: {
-            east: 'meadow'
+            south: 'hill'
         },
-        examine: ''
+        examine: {}
+    },
+    bees: {
+        flavorText:
+            'You come to a garden of golden dandelions. <br/><br/> Honeybees drift from plant to plant, giving rise to a dull buzzing sound throughout the area. In the center of the field lie several strange boxes, and bent over one of these is a hooded figure.',
+        nearbyText:
+            'you hear a gentle humming sound',
+        exits: {},
     },
     cabin: {
         flavorText:
@@ -77,7 +87,7 @@ const worldData = {
         exits: {
             north: 'trees'
         },
-        examine: ''
+        examine: {}
     }
 };
 
