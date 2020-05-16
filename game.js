@@ -176,7 +176,7 @@ class Game {
                     appendTextAndScroll(`<p>${this.getCurrentRoom().flavorText}<p/>`);
                     this.displayExits();
                 }
-                else if (this.getCurrentEvent().triggers.includes(word)) {
+                else if (this.getCurrentRoom().event && this.getCurrentEvent().triggers.includes(word)) {
                     this.tryEvent(word);
                 }
                 else {
