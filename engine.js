@@ -13,8 +13,6 @@ $(document).ready(function () {
         };
     })
 })
-// .text   <-- overwrites current text
-
 
 function appendTextAndScroll(text) {
     $('#game-text')

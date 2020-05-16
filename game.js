@@ -132,7 +132,6 @@ class Game {
         const currentEvent = this.getCurrentEvent();
         // user commands match event trigger
         if (currentEvent.conditionsMet(parsedInput, currentEvent.triggers, this.player)) {
-
             currentEvent.logic(this.player, currentEvent.flavorText, currentEvent.itemReward);
         }
         else {

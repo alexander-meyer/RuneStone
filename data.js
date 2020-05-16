@@ -19,7 +19,7 @@ const worldData = {
     },
     structure: {
         flavorText:
-            'You arrive at a modest shrine. <br/><br/> The wooden walls are old and the building itself exudes a quiet sort of charisma. It appears well cared for. Inside you see a raised altar surrounded by candles.',
+            'You arrive at a modest shrine. <br/><br/> The wooden walls are old and crumbling. The building seems to have been abandoned for some time now. Inside you see a raised altar.',
         nearbyText:
             'stands a small structure',
         exits: {
@@ -27,7 +27,7 @@ const worldData = {
             west: 'orchard'
         },
         examine: {
-            altar: 'There\'s a small groove in the center, about the size of a fist. You get the sense that something used to rest in this spot.'
+            altar: 'There\'s a small groove in the center, about the size of your fist. You get the sense that something used to rest here.'
         }
     },
     orchard: {
@@ -58,9 +58,10 @@ const worldData = {
         flavorText:
             'You reach the top of the hill. <br/><br/> Trees obscure much of your view, but you can see a thick plume of smoke far off to the northeast.',
         nearbyText:
-            'a large hill juts out of the earth',
+            'a large hill rises from the ground',
         exits: {
-            north: 'trees'
+            north: 'trees',
+            south: 'meadow'
         },
         examine: {}
     },

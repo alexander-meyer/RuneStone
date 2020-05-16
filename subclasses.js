@@ -24,7 +24,6 @@ class Item {
     get name() {
         return this._name;
     }
-
 }
 
 class Room {
