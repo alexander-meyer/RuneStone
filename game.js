@@ -144,7 +144,6 @@ class Game {
 
         let parsedInput = input.toLowerCase().split(' ').filter(element => element !== '>');
 
-        // returns first user command contained in a target array
         const directionToMove = findValidCommand(parsedInput, directionWords.concat(this.roomExits));
 
         if (directionToMove !== 'none') {
@@ -155,6 +154,10 @@ class Game {
         }
         else if (parsedInput.includes('help')) {
             help();
+        }
+        else if (findValidCommand(parsedInput, ["where", "am", "i"]) !== 'none') {
+            appendTextAndScroll(`<p>${this.getCurrentRoom().flavorText}<p/>`);
+            this.displayExits();
         }
         else if (parsedInput.includes('dance')) {
             appendTextAndScroll('you gyrate in place, swinging your arms back and forth. A shame no one is around to admire. <br/><br/>')
@@ -167,14 +170,7 @@ class Game {
                 const word = parsedInput[0];
 
                 if (movementWords.includes(word)) {
-                    appendTextAndScroll('where? <br/><br/>');
-                }
-                else if (word === 'check') {
-                    appendTextAndScroll('check what? <br/><br/>');
-                }
-                else if (word === 'room') {
-                    appendTextAndScroll(`<p>${this.getCurrentRoom().flavorText}<p/>`);
-                    this.displayExits();
+                    appendTextAndScroll('Where? <br/><br/>');
                 }
                 else if (this.getCurrentRoom().event && this.getCurrentEvent().triggers.includes(word)) {
                     this.tryEvent(word);
