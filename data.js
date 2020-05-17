@@ -19,7 +19,7 @@ const worldData = {
     },
     structure: {
         flavorText:
-            'You arrive at a modest shrine. <br/><br/> The wooden walls are old and crumbling. The building seems to have been abandoned for some time now. Inside you see a raised altar.',
+            'You arrive at a modest shrine. <br/><br/> The wooden walls are old and crumbling - the building seems to have been abandoned for some time now. Inside you see a raised altar.',
         nearbyText:
             'stands a small structure',
         exits: {
@@ -35,12 +35,14 @@ const worldData = {
             'You stand in the midst of a lush orchard. <br/><br/> Fruit trees surround you on all sides, suffusing the air with a delightful aroma. One tree in particular, covered in white blossoms, dwarfs the others.',
         nearbyText:
             'you see some sort of orchard',
-        exits: {},
+        exits: {
+            east: 'structure'
+        },
         examine: {
             tree: 'Small white flowers cover the entire tree. Looking at it fills you with a sense of calm. You notice several ripe pears dangling from a low-hanging branch.'
         },
         item: 'Pear',
-        event: 'Pluck'
+        event: 'pluck'
     },
     water: {
         flavorText:
@@ -77,14 +79,14 @@ const worldData = {
     },
     bees: {
         flavorText:
-            'You come to a garden of golden dandelions. <br/><br/> Honeybees drift from plant to plant, giving rise to a dull buzzing sound throughout the area. In the center of the field lie several strange boxes, and bent over one of these is a hooded figure.',
+            'You come to a garden of golden dandelions. <br/><br/> Honeybees drift from plant to plant, giving rise to a dull buzzing sound throughout the field. In the center of the scene lie several strange boxes, and bent over one of these is a hooded figure.',
         nearbyText:
             'you hear a gentle humming sound',
         exits: {},
     },
     cabin: {
         flavorText:
-            'You stumble upon an old cabin. Inside you see old bottles, rotting furniture and various papers strewn about.',
+            'You stumble upon an old cabin. Inside you see what was once ornate furniture and various papers strewn about.',
         exits: {
             north: 'trees'
         },
@@ -113,16 +115,16 @@ const art = {
     book: `
         __________________   __________________
     .-/|                  \\ /                  |\\-.
+    ||||      ~~~~~~       |                   ||||
     ||||                   |                   ||||
-    ||||                   |                   ||||
-    ||||                   | up, right, right, ||||
+    ||||  ~~~~~            | up, right, right, ||||
     ||||                   | down, left        ||||
+    ||||  ~~~~~~~~~~~~~~~~ |                   ||||
+    ||||                   | ~~~~~~~~~~~~      ||||
+    ||||  ~~~~~~~~~~~~~~~  |                   ||||
+    ||||  ~~~~~~~~~~       | ~~~~~~~~~~~~~~~~  ||||
     ||||                   |                   ||||
-    ||||                   |                   ||||
-    ||||                   |                   ||||
-    ||||                   |                   ||||
-    ||||                   |                   ||||
-    ||||                   |                   ||||
+    ||||      ~~~~~~~~~~   | ~~~~       ~~~~   ||||
     ||||__________________ | __________________||||
     ||/===================\\|/===================\\||
     \`--------------------~___~-------------------''
