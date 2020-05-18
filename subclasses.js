@@ -67,7 +67,7 @@ class Room {
     }
 
     hasEvent() {
-        return true ? this.event !== undefined : false;
+        return true ? this.event : false;
     }
 
 }

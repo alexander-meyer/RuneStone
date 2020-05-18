@@ -94,8 +94,7 @@ class Game {
         const inventory = this.player.inventory;
         if (Object.entries(inventory).length === 0) {
             appendTextAndScroll('nothing in your bag.<br/><br/>')
-        }
-        else {
+        } else {
             for (const item in inventory) {
                 if (inventory.hasOwnProperty(item)) {
                     appendTextAndScroll(`~ ${inventory[item].name}`);
@@ -112,8 +111,7 @@ class Game {
 
         if (validElement !== 'none') {
             appendTextAndScroll(this.getInteractives()[validElement] + '<br/><br/>');
-        }
-        else {
+        } else {
             appendTextAndScroll('Not much to tell, really. <br/> <br/>');
         }
 
@@ -133,8 +131,7 @@ class Game {
         // user commands match event trigger
         if (currentEvent.conditionsMet(parsedInput, currentEvent.triggers, this.player)) {
             currentEvent.logic(this.player, currentEvent.flavorText, currentEvent.itemReward);
-        }
-        else {
+        } else {
             badCommand();
         }
     }
@@ -148,41 +145,31 @@ class Game {
 
         if (directionToMove !== 'none') {
             this.changeRoom(directionToMove);
-        }
-        else if (findValidCommand(parsedInput, inventoryWords) !== 'none') {
+        } else if (findValidCommand(parsedInput, inventoryWords) !== 'none') {
             this.displayInventory();
-        }
-        else if (parsedInput.includes('help')) {
+        } else if (parsedInput.includes('help')) {
             help();
-        }
-        else if (findValidCommand(parsedInput, ["where", "am", "i"]) !== 'none') {
+        } else if (findValidCommand(parsedInput, ["where", "am", "i"]) !== 'none') {
             appendTextAndScroll(`<p>${this.getCurrentRoom().flavorText}<p/>`);
             this.displayExits();
-        }
-        else if (parsedInput.includes('dance')) {
+        } else if (parsedInput.includes('dance')) {
             appendTextAndScroll('you gyrate in place, swinging your arms back and forth. A shame no one is around to admire. <br/><br/>')
-        }
-        else if (['examine', 'investigate'].includes(parsedInput[0])) {
+        } else if (['examine', 'investigate'].includes(parsedInput[0])) {
             this.examine(parsedInput.slice(1));
-        }
-        else {
+        } else if (this.getCurrentRoom().event) {
+            this.tryEvent(parsedInput);
+        } else {
             if (parsedInput.length === 1) {
                 const word = parsedInput[0];
 
                 if (movementWords.includes(word)) {
                     appendTextAndScroll('Where? <br/><br/>');
-                }
-                else if (this.getCurrentRoom().event && this.getCurrentEvent().triggers.includes(word)) {
+                } else if (this.getCurrentRoom().event && this.getCurrentEvent().triggers.includes(word)) {
                     this.tryEvent(word);
-                }
-                else {
+                } else {
                     badCommand();
                 }
-            }
-            else if (this.getCurrentRoom().event) {
-                this.tryEvent(parsedInput);
-            }
-            else {
+            } else {
                 badCommand();
             }
         }
