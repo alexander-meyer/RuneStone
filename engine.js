@@ -21,7 +21,16 @@ function appendTextAndScroll(text) {
 }
 
 function help() {
-    appendTextAndScroll('This game involves traversing a variety of areas and interacting with the environment to solve puzzles and explore. The visible exits for each area are listed, though some rooms may respond to other prompts...<br/><br/>')
+    appendTextAndScroll(
+        text = `In this game, you traverse rooms and interact with your environment to discover secrets and solve puzzles. Some of the basic commands are:
+        <ul>
+        <li><b>go</b> : move between rooms</li>
+        <li><b>examine</b> : investigate a particular object</li>
+        <li><b>bag</b> : check the contents of your inventory</li>
+        <li><b>where am i</b> : information about your current location</li>
+        </ul>
+        Areas may also contain secrets that respond to additional prompts. Type <i>help</i> to bring up this information again. <br/><br/>Best of luck to you, adventurer...<br/><br/>`
+    )
 }
 
 function isValidCommand(userInput, targetArray) {
