@@ -46,7 +46,7 @@ const worldData = {
     },
     water: {
         flavorText:
-            'You come to the bank of a river. <br/><br/> Swathes of cattails line the shore, swaying in the breeze. The water looks cool and pleasant.',
+            'You come to the bank of a river. <br/><br/> A large red dragonfly twirls through the air, racing past a pair of sunbathing turtles. The water looks cool and pleasant.',
         nearbyText:
             'you hear the sound of rushing water',
         exits: {
