@@ -14,7 +14,7 @@ body {
     height: 92%;
     background-color: #f7e6ae;
     color: rgb(70, 54, 30);
-    font: normal 12pt monospace;
+    font-family: "Courier New", Courier, monospace;
 }
 
 .container {
@@ -38,6 +38,10 @@ body {
 
 #game-window {
     height: 70%;
+}
+
+::-webkit-scrollbar {
+    width: 0 !important;
 }
 
 #game-text {
