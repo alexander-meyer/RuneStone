@@ -2,6 +2,10 @@ const gameText = $('#game-text');
 const userInput = $('#user-input');
 
 $(document).ready(function () {
+
+    const startScreen = document.getElementById("start-screen");
+    startScreen.insertAdjacentHTML("afterbegin", infoScreen);
+
     const game = new Game($('#game-text'));
     game.setUpWorld();
 
@@ -14,6 +18,25 @@ $(document).ready(function () {
     })
 })
 
+function startGame() {
+    const startScreen = document.getElementById("start-screen");
+    const gameScreen = document.getElementById("game-window");
+
+    $(startScreen).fadeOut(3000,
+        function () {
+            startScreen.textContent = "Best of luck to you, adventurer..."
+            $(startScreen).fadeIn(2000,
+                function () {
+                    $(startScreen).fadeOut(3500,
+                        function () {
+                            $(gameScreen).fadeIn(2000)
+                        })
+                }
+            )
+        }
+    );
+}
+
 function appendTextAndScroll(text) {
     $('#game-text')
         .append(text)
@@ -21,16 +44,7 @@ function appendTextAndScroll(text) {
 }
 
 function help() {
-    appendTextAndScroll(
-        text = `In this game, you traverse rooms and interact with your environment to discover secrets and solve puzzles. Some of the basic commands are:
-        <ul>
-        <li><b>go</b> : move between rooms</li>
-        <li><b>examine</b> : investigate a particular object</li>
-        <li><b>bag</b> : check the contents of your inventory</li>
-        <li><b>where am i</b> : information about your current location</li>
-        </ul>
-        Areas may also contain secrets that respond to additional prompts. Type <i>help</i> to bring up this information again. <br/><br/>Best of luck to you, adventurer...<br/><br/>`
-    )
+    appendTextAndScroll(infoScreen)
 }
 
 function isValidCommand(userInput, targetArray) {

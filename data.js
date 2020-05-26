@@ -1,7 +1,15 @@
-const movementWords = ['go', 'move', 'walk', 'run', 'travel', 'exit'];
-const lookWords = ['area', 'surroundings', 'around', 'exits', 'look'];
-const inventoryWords = ['bag', 'inventory', 'items', 'stuff'];
+const movementWords = ['go', 'move', 'walk', 'run', 'exit'];
+const inventoryWords = ['bag', 'inventory', 'items'];
 const directionWords = ['north', 'forward', 'west', 'left', 'right', 'east', 'south',];
+
+const infoScreen = `In this game, you traverse rooms and interact with your environment to discover secrets and solve puzzles. Some of the basic commands are:
+<ul>
+<li><b>go</b> : move between rooms</li>
+<li><b>examine</b> : investigate a particular object</li>
+<li><b>bag</b> : check the contents of your inventory</li>
+<li><b>where am i</b> : information about your current location</li>
+</ul>
+Areas may also contain secrets that respond to additional prompts. Type <i>help</i> at any time to bring up this information again. <br/><br/>`
 
 const worldData = {
     meadow: {
@@ -24,7 +32,7 @@ const worldData = {
             'stands a small structure',
         exits: {
             north: 'meadow',
-            west: 'orchard'
+            south: 'orchard'
         },
         examine: {
             altar: 'There\'s a small groove in the center, about the size of your fist. You get the sense that something used to rest here.'
@@ -32,11 +40,11 @@ const worldData = {
     },
     orchard: {
         flavorText:
-            'You stand in the midst of a lush orchard. <br/><br/> Fruit trees surround you on all sides, suffusing the air with a delightful aroma. One tree in particular, covered in white blossoms, dwarfs the others.',
+            'You stand in the midst of an overgrown orchard. <br/><br/> Fruit trees surround you on all sides, suffusing the air with a delightful aroma. One tree in particular, covered in white blossoms, dwarfs the others.',
         nearbyText:
             'you see some sort of orchard',
         exits: {
-            east: 'structure'
+            north: 'structure'
         },
         examine: {
             tree: 'Small white flowers cover the entire tree. Looking at it fills you with a sense of calm. You notice several ripe pears dangling from a low-hanging branch.'
@@ -56,9 +64,10 @@ const worldData = {
         item: 'Amethyst Ring',
         event: 'swim'
     },
+
     hill: {
         flavorText:
-            'You reach the top of the hill. <br/><br/> Trees obscure much of your view, but you can see a thick plume of smoke far off to the northeast.',
+            'You reach the top of the hill. <br/><br/> Trees obscure much of your view, but you can see a thick plume of smoke far off to the northwest.',
         nearbyText:
             'a large hill rises from the ground',
         exits: {
@@ -97,21 +106,6 @@ const worldData = {
 
 
 const art = {
-    sword: `
-            ()
-            )(
-            )(
-         o======o
-            ||
-            ||
-            ||
-            ||
-            ||
-            ||
-            ||
-            ||
-            ||
-            \\/`,
     book: `
         __________________   __________________
     .-/|                  \\ /                  |\\-.
@@ -159,15 +153,5 @@ const art = {
       /   # \\
      (   ##  ) 
       ',___,'
-    `,
-    title: `
-             ____________________________________________________
-    ________|   __   _  _         __   __  ___   __          __  |_______
-    \\       |  |__|  |  |  |\\ |  |__  /_    |   |  |  |\\ |  |__  |      /
-     \\      |  |  \\  |__|  | \\|  |__  __/   |   |__|  | \\|  |__  |     /
-     /      |____________________________________________________|     \\
-    /__________)                                             (__________\\
-        `
-
-
+    `
 }

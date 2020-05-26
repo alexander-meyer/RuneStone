@@ -36,6 +36,31 @@ body {
     border: #000 thick;
 }
 
+#start-screen {
+    margin-top: 3em;
+}
+
+#start {
+    margin-top: 3em;
+    margin-left: 40%;
+    margin-right: 40%;
+    width: 20%;
+    background: transparent;
+    border: transparent;
+    border-radius: 12px;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font: normal 16px "Courier New";
+    transition-duration: 0.4s;
+}
+
+#start:hover {
+    background-color: rgb(70, 54, 30); /* Green */
+    color: #f7e6ae;
+}
+
 #game-window {
     height: 70%;
 }
