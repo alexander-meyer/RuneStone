@@ -6,6 +6,20 @@ $(document).ready(function () {
     const startScreen = document.getElementById("start-screen");
     startScreen.insertAdjacentHTML("afterbegin", infoScreen);
 
+    const title = document.getElementById("title");
+    const buttonContainer = document.getElementById("button-container");
+
+    $(title).fadeIn(2000,
+        function () {
+            $(startScreen).fadeIn(3200,
+                function () {
+                    $(buttonContainer).fadeIn(2500);
+                }
+            );
+        }
+    )
+
+
     const game = new Game($('#game-text'));
     game.setUpWorld();
 
@@ -19,13 +33,15 @@ $(document).ready(function () {
 })
 
 function startGame() {
+    const title = document.getElementById("title");
     const startScreen = document.getElementById("start-screen");
     const gameScreen = document.getElementById("game-window");
 
-    $(startScreen).fadeOut(3000,
+    $(document.body).fadeOut(1500,
         function () {
+            title.style.display = "none";
             startScreen.textContent = "Best of luck to you, adventurer..."
-            $(startScreen).fadeIn(2000,
+            $(document.body).fadeIn(2000,
                 function () {
                     $(startScreen).fadeOut(3500,
                         function () {
@@ -40,7 +56,7 @@ function startGame() {
 function appendTextAndScroll(text) {
     $('#game-text')
         .append(text)
-        .animate({ scrollTop: (gameText).prop("scrollHeight") - gameText.height() }, 350);
+        .animate({ scrollTop: (gameText).prop("scrollHeight") - gameText.height() }, 250);
 }
 
 function help() {
